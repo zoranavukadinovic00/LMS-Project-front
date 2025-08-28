@@ -1,0 +1,20 @@
+<div class="page-container" *ngIf="university">
+  <h1>{{ university.name }}</h1>
+
+  <div class="page-content">
+    <p><strong>Address:</strong> {{ university.address }}</p>
+    <p><strong>Rector:</strong> {{ university.rectorName }}</p>
+
+    <h2>Description</h2>
+    <p class="description">{{ university.description }}</p>
+
+    <h2>Our faculties</h2>
+    <ul class="list">
+      <li *ngFor="let faculty of faculties">
+        <a [routerLink]="['/faculty', faculty.id]">{{ faculty.name }}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="!university">Loading...</div>

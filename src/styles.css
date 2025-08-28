@@ -1,0 +1,104 @@
+:root {
+  /* Primary brand colors */
+  --color-primary: #dba39a;
+  --color-secondary: #f0dbdb;
+  --color-accent: #a66c77;
+
+  /* Neutral palette */
+  --color-light: #fefcf3;
+  /* --color-dark: #111827; */
+
+  /* Text colors */
+  --text-primary: #1f2937;
+  /* --text-secondary: #6b7280; */
+
+  --form-background: #f5ebe0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-light); /* light background */
+  color: var(--text-primary);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.form-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: var(--form-background);
+
+  input {
+    width: 95%;
+    margin-bottom: 20px;
+    padding: 8px;
+  }
+  button {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: var(--color-primary);
+    border-radius: 50px;
+    width: 50%;
+    margin-left: 25%;
+    color: var(--color-light);
+  }
+  .validation-error {
+    color: red;
+    position: absolute;
+    margin-top: -20px;
+    font-size: 12px;
+  }
+}
+
+.page-container {
+  /* max-width: 400px; */
+  margin: auto;
+  padding: 50px 150px 50px 80px;
+  border-radius: 5px;
+  /* background-color: var(--form-background);   */
+
+  .page-content {
+    padding-left: 30px;
+    padding-top: 10px;
+    h2 {
+      margin-top: 40px;
+    }
+    .description {
+      max-width: 500px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: var(--form-background);
+    }
+  }
+}
+
+.list {
+  margin-left: 20px;
+  list-style: none;
+  padding: 0;
+  /* margin-top: 5px; */
+  li {
+    padding: 8px 0;
+  }
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.button-primary {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: var(--color-primary);
+  border-radius: 50px;
+  width: 50%;
+  margin-left: 25%;
+  color: var(--color-light);
+}

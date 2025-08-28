@@ -1,0 +1,17 @@
+<div class="container mt-4">
+  <h2>Professor Syllabus</h2>
+
+  <div *ngIf="syllabuses && syllabuses.length > 0; else noSyllabus">
+    <ul class="syllabus-list">
+      <li *ngFor="let syllabus of syllabuses" class="syllabus-item">
+        <h3>Syllabus </h3>
+        <p><strong>Description:</strong> {{ syllabus.description }}</p>
+        
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noSyllabus>
+    <p>No syllabus found.</p>
+  </ng-template>
+</div>

@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <h2>Your Evaluations</h2>
+  <div *ngIf="evaluations.length > 0" class="total-espb">
+    <strong>total ESPB: {{ totalESPB }}</strong>
+  </div>
+
+  <table
+    class="table table-bordered table-striped mt-3"
+    *ngIf="evaluations.length > 0; else noData"
+  >
+    <thead class="table-dark">
+      <tr>
+        <th>Course Name</th>
+        <th>Final Points</th>
+        <th>Attempts</th>
+        <th>Final Grade</th>
+        <th>Average Grade</th>
+        <th>ESPB</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of evaluations">
+        <td>{{ e.courseName }}</td>
+        <td>{{ e.finalPoints }}</td>
+        <td>{{ e.numberOfAttempts }}</td>
+        <td>{{ e.finalGrade }}</td>
+        <td>{{ e.averageGrade }}</td>
+        <td>{{ e.courseESPB }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noData>
+    <p>No evaluation data available for this student.</p>
+  </ng-template>
+</div>

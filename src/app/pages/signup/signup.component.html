@@ -1,0 +1,71 @@
+<div class="form-container">
+  <h1>Sign Up</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>Name:</label>
+    <input type="text" formControlName="name" />
+    <div
+      *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+      class="validation-error"
+    >
+      Name is required
+    </div>
+
+    <label>Surname:</label>
+    <input type="text" formControlName="surname" />
+    <div
+      *ngIf="form.get('surname')?.invalid && form.get('surname')?.touched"
+      class="validation-error"
+    >
+      Surname is required
+    </div>
+
+    <label>Username:</label>
+    <input type="text" formControlName="username" />
+    <div
+      *ngIf="form.get('username')?.invalid && form.get('username')?.touched"
+      class="validation-error"
+    >
+      Username is required
+    </div>
+
+    <label>JMBG:</label>
+    <input type="text" formControlName="jmbg" maxlength="13" />
+    <div
+      *ngIf="form.get('jmbg')?.invalid && form.get('jmbg')?.touched"
+      class="validation-error"
+    >
+      JMBG must be 13 digits
+    </div>
+
+    <label>Email:</label>
+    <input type="email" formControlName="email" />
+    <div
+      *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+      class="validation-error"
+    >
+      Valid email required
+    </div>
+
+    <label>Password:</label>
+    <input type="password" formControlName="password" />
+    <div
+      *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
+      class="validation-error"
+    >
+      Password required
+    </div>
+
+    <label>Biography:</label>
+    <textarea formControlName="biography" rows="4"></textarea>
+    <div
+      *ngIf="form.get('biography')?.invalid && form.get('biography')?.touched"
+      class="validation-error"
+    >
+      Biography is required
+    </div>
+    
+    <button type="submit" [disabled]="form.invalid">Register</button>
+  </form>
+
+  <p>Already have an account? <a routerLink="/login">Login</a></p>
+</div>

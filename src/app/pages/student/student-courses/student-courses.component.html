@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h2>Student Course</h2>
+
+  <div *ngIf="studentCourses && studentCourses.length > 0; else noCourses">
+     <ul class="course-list">
+      <li *ngFor="let course of studentCourses" class="course-item">
+        <h3>{{ course.courseName }}</h3>
+        <p><strong>ESPB Points:</strong> {{ course.coursesEspbPoints }}</p>
+
+        <p><strong>Status:</strong> 
+        <span 
+            [ngClass]="{
+              'badge badge-success': course.status === 'PASSED',
+              'badge badge-warning': course.status === 'ENROLLED',
+              'badge badge-danger': course.status === 'FAILED'
+            }">
+            {{ course.status }}
+          </span>
+        </p>
+        <p><strong>Your points:</strong> {{ course.points }}</p>
+        <p><strong>Exam Applications:</strong> {{ course.numberOfExamApplications }}</p>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noCourses>
+    <p>No courses found.</p>
+  </ng-template>
+</div>

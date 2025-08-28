@@ -1,0 +1,65 @@
+<nav class="navbar">
+  <ul>
+    <li>
+      <a
+        routerLink="/university/1"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+    </li>
+    <!-- <li>
+      <a routerLink="/university/1" routerLinkActive="active">University</a>
+    </li> -->
+
+    <!-- Not logged in -->
+    <ng-container *ngIf="!role">
+      <li><a routerLink="/signup" routerLinkActive="active">Sign Up</a></li>
+      <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+    </ng-container>
+
+    <!-- Logged in -->
+    <ng-container *ngIf="role">
+      <li><a routerLink="/my-profile" routerLinkActive="active">Profile</a></li>
+
+      <ng-container *ngIf="role === 'STUDENT'">
+        <li>
+          <a routerLink="/my-courses" routerLinkActive="active">Courses</a>
+        </li>
+        <li>
+          <a routerLink="/my-notifications" routerLinkActive="active"
+            >Notifications</a
+          >
+        </li>
+        <li>
+          <a routerLink="/my-history" routerLinkActive="active"
+            >Academic History</a
+          >
+        </li>
+        <li>
+          <a routerLink="/exam-registration" routerLinkActive="active"
+            >Exam Registration</a
+          >
+        </li>
+      </ng-container>
+
+      <li *ngIf="role === 'PROFESSOR'">
+        <a routerLink="/professor-dashboard" routerLinkActive="active"
+          >Professor Dashboard</a
+        >
+        <a routerLink="/manage-courses" routerLinkActive="active"
+          >Manage Courses</a
+        >
+      </li>
+
+      <li *ngIf="role === 'ADMIN'">
+        <a routerLink="/admin-panel" routerLinkActive="active">Admin Panel</a>
+        <a routerLink="/user-management" routerLinkActive="active"
+          >User Management</a
+        >
+      </li>
+
+      <li><a href="/login" (click)="logout()">Logout</a></li>
+    </ng-container>
+  </ul>
+</nav>

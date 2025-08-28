@@ -1,0 +1,17 @@
+<div class="page-container" *ngIf="studyProgram">
+  <h1>{{ studyProgram.name }}</h1>
+  <div class="page-content">
+    <p><strong>Manager:</strong> {{ studyProgram.managerName }}</p>
+    <h2>Description</h2>
+    <p class="description">{{ studyProgram.description }}</p>
+
+    <h2>Courses in this program</h2>
+    <ul class="list">
+      <li *ngFor="let course of courses">
+        <a [routerLink]="['/course', course.id]">{{ course.name }}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="!studyProgram">Loading...</div>

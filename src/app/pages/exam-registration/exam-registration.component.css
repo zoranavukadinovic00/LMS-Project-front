@@ -1,0 +1,92 @@
+.exam-registration {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--form-background);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+/* 
+.exam-registration h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+} */
+
+.exam-registration label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.exam-registration select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: var(--color-light);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.exam-registration select:focus {
+  border-color: var(--color-secondary);
+  outline: none;
+}
+
+.exam-registration select option:hover {
+  background-color: var(--color-secondary);
+  outline: none;
+}
+
+.exam-registration ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.exam-registration li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.exam-registration li:last-child {
+  border-bottom: none;
+}
+
+.exam-registration input[type="checkbox"] {
+  margin-right: 0.6rem;
+  transform: scale(1.2);
+}
+/* 
+.button-primary {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button-primary:hover {
+  background-color: #0056b3; */
+/* } */
+
+.success {
+  margin-top: 1rem;
+  color: #28a745;
+  font-weight: 500;
+}
+
+.error {
+  margin-top: 1rem;
+  color: #dc3545;
+  font-weight: 500;
+}

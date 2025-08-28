@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <h2>Professor Courses</h2>
+
+  <div *ngIf="professorCourses && professorCourses.length > 0; else noCourses">
+    <ul class="course-list">
+      <li *ngFor="let course of professorCourses" class="course-item">
+        <div class="course-row">
+          <h3 class="course-name">{{ course.courseName }}</h3>
+
+          <div class="actions">
+            <button type="button" (click)="openEvaluations(course.courseId)">
+              Evaluation Instruments
+            </button>
+
+            <button type="button" (click)="openSyllabus(course.courseId)">
+              Syllabus
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noCourses>
+    <p>No courses found.</p>
+  </ng-template>
+</div>

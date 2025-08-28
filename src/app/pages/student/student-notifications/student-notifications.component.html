@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <h2>Course Notifications</h2>
+
+  <div *ngIf="notifications.length > 0; else noNotifications">
+    <ul class="notification-list">
+      <li *ngFor="let note of notifications" class="notification-item">
+        <h3>{{ note.title }}</h3>
+        <p><strong>Course:</strong> {{ note.courseName }}</p>
+        <p>{{ note.content }}</p>
+        <small class="posted-at">
+          Posted at: {{ note.postedAt | date:'dd.MM.yyyy HH:mm' }}
+        </small>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noNotifications>
+    <p>No notifications available.</p>
+  </ng-template>
+</div>

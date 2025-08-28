@@ -1,0 +1,28 @@
+.navbar {
+  background-color: var(--color-accent) ;
+  /* padding: 0.5rem 1rem; */
+  padding: 20px;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 20px 30px;
+}
+
+.navbar a:hover {
+  background-color: #98636d;
+}
+
+.navbar a.active {
+  background-color: var(--color-primary);
+  /* border-radius:  */
+}
+

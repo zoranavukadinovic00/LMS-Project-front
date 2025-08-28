@@ -1,0 +1,43 @@
+<div class="form-container" *ngIf="!loading; else loadingTpl">
+  <h2>Your Profile</h2>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <label>Name:</label>
+    <input type="text" formControlName="name" />
+    <div *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched" class="validation-error">
+      Name is required.
+    </div>
+
+    <label>Surname:</label>
+    <input type="text" formControlName="surname" />
+    <div *ngIf="profileForm.get('surname')?.invalid && profileForm.get('surname')?.touched" class="validation-error">
+      Surname is required.
+    </div>
+
+    <label>Username:</label>
+    <input type="text" formControlName="username" />
+    <div *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched" class="validation-error">
+      Username is required.
+    </div>
+
+    <label>JMBG:</label>
+    <input type="text" formControlName="jmbg" maxlength="13" />
+    <div *ngIf="profileForm.get('jmbg')?.invalid && profileForm.get('jmbg')?.touched" class="validation-error">
+      JMBG must be 13 digits.
+    </div>
+
+    <label>Email:</label>
+    <input type="email" formControlName="email" />
+    <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="validation-error">
+      Valid email is required.
+    </div>
+
+    <button type="submit" [disabled]="profileForm.invalid">Save</button>
+  </form>
+
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>
+
+<ng-template #loadingTpl>
+  <p>Loading...</p>
+</ng-template>
