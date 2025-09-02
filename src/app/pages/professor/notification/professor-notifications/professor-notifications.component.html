@@ -1,0 +1,51 @@
+<div class="page">
+  <div class="left">
+    <div class="header">
+      <h2 class="title">Course Notifications</h2>
+      <button class="create-btn" (click)="openCreate()">Create</button>
+    </div>
+
+    <div *ngIf="notifications && notifications.length > 0; else noNotifications">
+      <ul class="notification-list">
+        <li *ngFor="let n of notifications" class="notification-item">
+          <div class="row">
+            <div class="info">
+              <h3 class="notif-title">{{ n.title }}</h3>
+              <p><strong>Course:</strong> {{ n.courseName }}</p>
+
+              <p *ngIf="n.content">{{ n.content }}</p>
+              <p class="posted" *ngIf="n.postedAt">
+                <small>Posted: {{ n.postedAt | date:'dd.MM.yyyy HH:mm' }}</small>
+              </p>
+            </div>
+
+            <div class="actions">
+              <button type="button" (click)="openUpdate(n)">Update</button>
+              <button type="button" class="danger" (click)="delete(n)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noNotifications>
+      <p>No notifications found.</p>
+    </ng-template>
+  </div>
+
+  <div class="right" *ngIf="rightPanel !== 'none'">
+    <app-notification-create
+  *ngIf="rightPanel === 'create'"
+  [courseId]="courseId!"
+  (created)="onCreated($event)"
+  (cancel)="closePanel()"
+></app-notification-create>
+
+<app-notification-update
+  *ngIf="rightPanel === 'update' && editing"
+  [item]="editing!"
+  (updated)="onUpdated($event)"
+  (cancel)="closePanel()"
+></app-notification-update>
+  </div>
+</div>

@@ -1,4 +1,6 @@
 export interface EvaluationInstrument {
-    points: number,
-    name: String
+    id: number;
+    name: string;
+    points: number;
+    courseId: number;
 }

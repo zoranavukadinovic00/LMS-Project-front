@@ -12,8 +12,9 @@ import { StudentNotificationsComponent } from './pages/student/student-notificat
 import { StudentCourseComponent } from './pages/student/student-courses/student-courses.component';
 import { StudentHistoryComponent } from './pages/student/student-history/student-history.component';
 import { ProfesorCoursesComponent } from './pages/professor/professor-courses/professor-courses.component';
-import { ProfesorEvaluationInstrumentComponent } from './pages/professor/professor-evaluation-instrument/professor-evaluation-instrument.component';
-import { ProfessorSyllabusComponent } from './pages/professor/professor-syllabus/professor-syllabus.component';
+import { ProfessorSyllabusComponent } from './pages/professor/syllabus/professor-syllabus/professor-syllabus.component';
+import { ProfessorNotificationsComponent } from './pages/professor/notification/professor-notifications/professor-notifications.component';
+import { ProfessorEvaluationInstrumentComponent } from './pages/professor/evaluation-instrument/professor-evaluation-instrument/professor-evaluation-instrument.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,8 +30,9 @@ export const routes: Routes = [
   { path: 'my-courses', component: StudentCourseComponent},
   { path: 'manage-courses', component: ProfesorCoursesComponent},
   { path: 'exam-registration', component: ExamRegistrationComponent},
-  { path: 'professor-evaluations/:id', component: ProfesorEvaluationInstrumentComponent },
-  { path: 'professor-syllabus/:id', component: ProfessorSyllabusComponent }
+  { path: 'professor-evaluations/:id', component: ProfessorEvaluationInstrumentComponent },
+  { path: 'professor-syllabus/:id', component: ProfessorSyllabusComponent },
+  { path: 'professor-notifications/:id', component: ProfessorNotificationsComponent }
   
 
 ];

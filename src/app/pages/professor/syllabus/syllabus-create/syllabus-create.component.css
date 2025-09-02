@@ -1,0 +1,10 @@
+.panel { background:#fff; border:1px solid #e7e7e7; border-radius:12px; padding:16px; box-shadow:0 4px 12px rgba(0,0,0,.04); }
+.panel-title { margin:0 0 12px; }
+.form { display:flex; flex-direction:column; gap:10px; }
+.label { font-weight:600; }
+.input { width:100%; padding:10px; border:1px solid #cfcfcf; border-radius:8px; resize:vertical; }
+.actions { display:flex; gap:8px; margin-top:8px; }
+button { padding:8px 14px; border-radius:8px; border:1px solid transparent; cursor:pointer; }
+button[disabled]{ opacity:.6; cursor:not-allowed; }
+.secondary{ background:#f7f7f7; border-color:#ddd; }
+.error { color:#b00020; font-size:.9rem; }

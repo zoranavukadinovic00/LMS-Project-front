@@ -1,0 +1,18 @@
+<div class="panel">
+  <h3 class="panel-title">Create Syllabus</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <label class="label">Description</label>
+    <textarea rows="8" class="input" formControlName="description" placeholder="Enter syllabus description"></textarea>
+    <div class="error" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+      Description is required (max 4000 chars).
+    </div>
+
+    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid || loading">{{ loading ? 'Creating...' : 'Create' }}</button>
+      <button type="button" class="secondary" (click)="onCancel()" [disabled]="loading">Cancel</button>
+    </div>
+  </form>
+</div>

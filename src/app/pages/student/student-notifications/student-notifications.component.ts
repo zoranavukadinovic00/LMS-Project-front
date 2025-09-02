@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {  CourseNotificationService } from '../../../services/course-notification.service';
 import { CourseNotification } from '../../../model/course-notification.model';
+import { CourseNotificationService } from '../../../services/course-notification.service';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { CourseNotification } from '../../../model/course-notification.model';
   styleUrls: ['./student-notifications.component.css']
 })
 export class StudentNotificationsComponent implements OnInit {
-
+  
   notifications: CourseNotification[] = [];
 
   constructor(private notificationService: CourseNotificationService) {}

@@ -1,0 +1,46 @@
+<div class="page">
+  <div class="left">
+    <div class="header">
+      <h2 class="title">Evaluation Instruments <span *ngIf="courseName">— {{ courseName }}</span></h2>
+      <button class="create-btn" (click)="openCreate()">Create</button>
+    </div>
+
+    <div *ngIf="evaluationInstruments && evaluationInstruments.length > 0; else noEvaluationInstrument">
+      <ul class="evaluation-instrument-list">
+        <li *ngFor="let item of evaluationInstruments" class="evaluation-instrument-item">
+          <div class="row">
+            <div class="info">
+              <h3 class="ei-title">{{ item.name }}</h3>
+              <p><strong>Points:</strong> {{ item.points }}</p>
+            </div>
+
+            <div class="actions">
+              <button type="button" (click)="openUpdate(item)">Update</button>
+              <button type="button" class="danger" (click)="delete(item)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noEvaluationInstrument>
+      <p>No evaluation instrument found.</p>
+    </ng-template>
+  </div>
+
+  <div class="right" *ngIf="rightPanel !== 'none'">
+    <app-evaluation-instrument-create
+      *ngIf="rightPanel === 'create' && courseId"
+      [courseId]="courseId!"
+      (created)="onCreated($event)"
+      (cancel)="closePanel()"
+    ></app-evaluation-instrument-create>
+
+    <app-evaluation-instrument-update
+      *ngIf="rightPanel === 'update' && editing"
+      [item]="editing!"
+      (updated)="onUpdated($event)"
+      (cancel)="closePanel()"
+    ></app-evaluation-instrument-update>
+  </div>
+</div>

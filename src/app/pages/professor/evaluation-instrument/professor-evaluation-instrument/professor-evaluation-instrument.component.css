@@ -1,0 +1,36 @@
+.page {
+  display: grid;
+  grid-template-columns: 1fr minmax(320px, 420px);
+  gap: 16px;
+  align-items: start;
+}
+.left { background: transparent; }
+.right { position: sticky; top: 16px; }
+
+.header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.title { margin:0; }
+.create-btn { padding:8px 14px; border-radius:8px; border:1px solid transparent; cursor:pointer; }
+
+.evaluation-instrument-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
+.evaluation-instrument-item {
+  border:1px solid #e7e7e7; border-radius:12px; padding:12px; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.03);
+}
+.row { display:flex; gap:12px; justify-content:space-between; }
+.info { flex:1; }
+.ei-title { margin:0 0 6px; }
+
+.actions { display:flex; gap:8px; }
+.actions > button { padding:6px 12px; border-radius:8px; border:1px solid #ddd; background:#f7f7f7; cursor:pointer; }
+.actions > .danger { background:#fff3f3; border-color:#f2c2c2; }
+
+@media (max-width: 900px) {
+  .page { grid-template-columns: 1fr; }
+  .right {
+    position: fixed; inset: 0 0 0 0; background: rgba(0,0,0,.25);
+    display:flex; align-items:flex-start; justify-content:flex-end; padding:16px;
+  }
+  .right > * {
+    width:min(100%, 480px);
+    background:#fff; border-radius:12px; padding:0; box-shadow:0 8px 24px rgba(0,0,0,.15);
+  }
+}

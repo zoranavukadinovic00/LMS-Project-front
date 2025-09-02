@@ -33,8 +33,14 @@ export class ProfesorCoursesComponent implements OnInit {
     this.router.navigate(['/professor-evaluations', courseId]);
   }
 
-  openSyllabus(courseId: number): void {
-    this.router.navigate(['/professor-syllabus', courseId]);
+  openNotifications(courseId: number): void {
+    this.router.navigate(['professor-notifications', courseId]);
   }
+
+  openSyllabus(courseId: number, courseName: string): void {
+  this.router.navigate(['/professor-syllabus', courseId], { 
+    state: { courseName } 
+  });
+}
 
 }

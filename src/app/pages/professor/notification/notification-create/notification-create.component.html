@@ -1,0 +1,29 @@
+<div class="panel">
+  <h3 class="panel-title">Create Notification</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+   
+    <label class="label">Title</label>
+    <input type="text" class="input" formControlName="title" placeholder="e.g. Midterm Results Published" />
+    <div class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
+      Title is required (max 200 chars).
+    </div>
+
+    <label class="label">Content</label>
+    <textarea class="input" formControlName="content" placeholder="Enter notification content"></textarea>
+    <div class="error" *ngIf="form.get('content')?.touched && form.get('content')?.invalid">
+      Content is required (max 1000 chars).
+    </div>
+
+    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid || loading">
+        {{ loading ? 'Creating...' : 'Create' }}
+      </button>
+      <button type="button" class="secondary" (click)="onCancel()" [disabled]="loading">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

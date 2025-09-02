@@ -1,3 +1,5 @@
 export interface Syllabus {
-    description: string
+    id: number;
+    description: string;
+    courseId: number;
 }

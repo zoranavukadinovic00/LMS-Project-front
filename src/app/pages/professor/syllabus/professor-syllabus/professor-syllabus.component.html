@@ -1,0 +1,47 @@
+<div class="page">
+  <div class="left">
+    <div class="header">
+      <h2 class="title">Syllabus <span *ngIf="courseName">— {{ courseName }}</span></h2>
+      <button class="create-btn" (click)="openCreate()">Create</button>
+    </div>
+
+    <div *ngIf="syllabuses && syllabuses.length > 0; else noSyllabus">
+      <ul class="syllabus-list">
+        <li *ngFor="let syllabus of syllabuses" class="syllabus-item">
+          <div class="row">
+            <div class="info">
+              <h3 class="syllabus-title">Syllabus</h3>
+              <p><strong>Description:</strong> {{ syllabus.description }}</p>
+            </div>
+
+            <div class="actions">
+              <button type="button" (click)="openUpdate(syllabus)">Update</button>
+              <button type="button" class="danger" (click)="delete(syllabus)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noSyllabus>
+      <p>No syllabus found.</p>
+    </ng-template>
+  </div>
+
+  <div class="right" *ngIf="rightPanel !== 'none'">
+    <app-syllabus-create
+      *ngIf="rightPanel === 'create' && courseId"
+      [courseId]="courseId!"
+      (created)="onCreated($event)"
+      (cancel)="closePanel()"
+    ></app-syllabus-create>
+    <app-syllabus-update
+      *ngIf="rightPanel === 'update' && editing"
+      [item]="editing!"
+      (updated)="onUpdated($event)"
+      (cancel)="closePanel()"
+    ></app-syllabus-update>
+
+   
+  </div>
+</div>

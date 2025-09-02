@@ -1,0 +1,28 @@
+<div class="panel">
+  <h3 class="panel-title">Create Evaluation Instrument</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <label class="label">Name</label>
+    <input type="text" class="input" formControlName="name" placeholder="e.g. Midterm Exam" />
+    <div class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Name is required (max 200 chars).
+    </div>
+
+    <label class="label">Points</label>
+    <input type="number" class="input" formControlName="points" placeholder="e.g. 30" />
+    <div class="error" *ngIf="form.get('points')?.touched && form.get('points')?.invalid">
+      Points must be between 0 and 100.
+    </div>
+
+    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid || loading">
+        {{ loading ? 'Creating...' : 'Create' }}
+      </button>
+      <button type="button" class="secondary" (click)="onCancel()" [disabled]="loading">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

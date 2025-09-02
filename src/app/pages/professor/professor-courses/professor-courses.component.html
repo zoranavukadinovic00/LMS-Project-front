@@ -12,9 +12,14 @@
               Evaluation Instruments
             </button>
 
-            <button type="button" (click)="openSyllabus(course.courseId)">
+            <button type="button" (click)="openSyllabus(course.courseId, course.courseName)">
               Syllabus
             </button>
+
+            <button type="button" (click)="openNotifications(course.courseId)">
+              Notifications
+            </button>
+
           </div>
         </div>
       </li>
