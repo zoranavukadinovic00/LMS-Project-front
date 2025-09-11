@@ -20,6 +20,15 @@
               Notifications
             </button>
 
+            <button type="button" (click)="openTermTopic(course.courseId, course.courseName)">
+              Term Topics
+            </button>
+
+            <button class="btn btn-light" (click)="openCourseDetails(course.courseId, course.courseName)">
+              Course Details
+            </button>
+
+
           </div>
         </div>
       </li>

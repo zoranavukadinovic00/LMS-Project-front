@@ -1,20 +1,74 @@
-<div class="page-container" *ngIf="university">
-  <h1>{{ university.name }}</h1>
+<div class="page-container">
+  <!-- View when data is loaded -->
+  <div *ngIf="university && !loading && !error">
+    <h1>{{ university.name }}</h1>
 
-  <div class="page-content">
-    <p><strong>Address:</strong> {{ university.address }}</p>
-    <p><strong>Rector:</strong> {{ university.rectorName }}</p>
+    <div class="page-content">
+      <div class="university-info">
+        <p>
+          <strong>Address:</strong>
+          <span *ngIf="university.address; else noAddress">{{ university.address }}</span>
+          <ng-template #noAddress>
+            <span class="no-data">Not available</span>
+          </ng-template>
+        </p>
 
-    <h2>Description</h2>
-    <p class="description">{{ university.description }}</p>
+        <p>
+          <strong>Contact:</strong>
+          <span *ngIf="university.contact; else noContact">{{ university.contact }}</span>
+          <ng-template #noContact>
+            <span class="no-data">Not available</span>
+          </ng-template>
+        </p>
 
-    <h2>Our faculties</h2>
-    <ul class="list">
-      <li *ngFor="let faculty of faculties">
-        <a [routerLink]="['/faculty', faculty.id]">{{ faculty.name }}</a>
-      </li>
-    </ul>
+        <p>
+          <strong>Established:</strong>
+          <span *ngIf="university.dateOfEstablishment; else noDate">
+            {{ formatDate(university.dateOfEstablishment) }}
+          </span>
+          <ng-template #noDate>
+            <span class="no-data">Not available</span>
+          </ng-template>
+        </p>
+
+        <p>
+          <strong>Rector:</strong>
+          <span *ngIf="university.rectorName; else noRector">
+            {{ university.rectorName }}
+            <span *ngIf="university.rectorEmail" class="rector-email">
+              (<a href="mailto:{{ university.rectorEmail }}">{{ university.rectorEmail }}</a>)
+            </span>
+          </span>
+          <ng-template #noRector>
+            <span class="no-data">Not available</span>
+          </ng-template>
+        </p>
+      </div>
+
+      <h2>Description</h2>
+      <div class="description">
+        <p *ngIf="university.description; else noDescription">{{ university.description }}</p>
+        <ng-template #noDescription>
+          <p class="no-data">Description not available.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading university information...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error && !loading" class="error-container">
+    <div class="error-message">
+      <h2>An error occurred</h2>
+      <p>{{ error }}</p>
+      <button class="retry-button" (click)="loadUniversityData()" type="button">
+        Try again
+      </button>
+    </div>
   </div>
 </div>
-
-<div *ngIf="!university">Loading...</div>

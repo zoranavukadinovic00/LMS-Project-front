@@ -1,0 +1,53 @@
+<div class="panel">
+  <h3 class="panel-title">Create Term Topic</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form" novalidate>
+    
+    <label class="label">Term number</label>
+    <input
+      type="number"
+      class="input"
+      formControlName="termNumber"
+      placeholder="e.g. 1"
+      min="1"
+      step="1"
+    />
+    <div class="error" *ngIf="form.get('termNumber')?.touched && form.get('termNumber')?.invalid">
+      <ng-container *ngIf="form.get('termNumber')?.errors?.['required']">
+        Term number is required.
+      </ng-container>
+      <ng-container *ngIf="form.get('termNumber')?.errors?.['min']">
+        Term number must be at least 1.
+      </ng-container>
+    </div>
+
+    
+    <label class="label">Description (Outcome/Topic)</label>
+    <textarea
+      rows="6"
+      class="input"
+      formControlName="description"
+      placeholder="Enter topic/learning outcome for this term"
+    ></textarea>
+    <div class="error" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+      <ng-container *ngIf="form.get('description')?.errors?.['required']">
+        Description is required.
+      </ng-container>
+      <ng-container *ngIf="form.get('description')?.errors?.['maxlength']">
+        Max length exceeded.
+      </ng-container>
+    </div>
+
+    
+    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid || loading">
+        {{ loading ? 'Creating...' : 'Create' }}
+      </button>
+      <button type="button" class="secondary" (click)="onCancel()" [disabled]="loading">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

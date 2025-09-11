@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profesor-courses',
-    standalone: true,
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './professor-courses.component.html',
   styleUrl: './professor-courses.component.css'
@@ -27,8 +27,6 @@ export class ProfesorCoursesComponent implements OnInit {
     }
   }
 
-
-
   openEvaluations(courseId: number): void {
     this.router.navigate(['/professor-evaluations', courseId]);
   }
@@ -36,11 +34,20 @@ export class ProfesorCoursesComponent implements OnInit {
   openNotifications(courseId: number): void {
     this.router.navigate(['professor-notifications', courseId]);
   }
-
+  
   openSyllabus(courseId: number, courseName: string): void {
   this.router.navigate(['/professor-syllabus', courseId], { 
     state: { courseName } 
-  });
-}
+  });}
+  openTermTopic(courseId: number, courseName: string): void {
+    this.router.navigate(['/professor-term-topic', courseId], { state: { courseName } });
+
+  }
+
+  openCourseDetails(courseId: number, courseName: string): void {
+  this.router.navigate(['/manage-courses', courseId, 'details'], { state: { courseName } });
+  }
+
 
 }
+

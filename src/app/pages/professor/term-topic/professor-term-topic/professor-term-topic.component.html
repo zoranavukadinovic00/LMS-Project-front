@@ -1,0 +1,48 @@
+<div class="page">
+  <div class="left">
+    <div class="header">
+      <h2 class="title">Term Topics <span *ngIf="courseName">— {{ courseName }}</span></h2>
+      <button class="create-btn" (click)="openCreate()">Create</button>
+    </div>
+
+    <div *ngIf="termTopics && termTopics.length > 0; else noTopics">
+      <ul class="topic-list">
+        <li *ngFor="let topic of termTopics" class="topic-item">
+          <div class="row">
+            <div class="info">
+              <h3 class="topic-title">Term {{ topic.termNumber }}</h3>
+              <p><strong>Description:</strong> {{ topic.description }}</p>
+            </div>
+
+            <div class="actions">
+              <button type="button" (click)="openUpdate(topic)">Update</button>
+              <button type="button" class="danger" (click)="delete(topic)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noTopics>
+      <p>No term topics found.</p>
+    </ng-template>
+  </div>
+
+  <div class="right" *ngIf="rightPanel !== 'none'">
+    <!-- Create -->
+    <app-term-topic-create
+      *ngIf="rightPanel === 'create' && courseId"
+      [courseId]="courseId!"
+      (created)="onCreated($event)"
+      (cancel)="closePanel()">
+    </app-term-topic-create>
+
+    <!-- Update -->
+    <app-term-topic-update
+      *ngIf="rightPanel === 'update' && editing"
+      [item]="editing!"
+      (updated)="onUpdated($event)"
+      (cancel)="closePanel()">
+    </app-term-topic-update>
+  </div>
+</div>

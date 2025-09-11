@@ -6,4 +6,5 @@ export interface User {
   jmbg: string;
   email: string;
   role: string;
+  biography: string;
 }

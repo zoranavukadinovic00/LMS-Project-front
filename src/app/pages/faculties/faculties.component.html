@@ -1,0 +1,21 @@
+<div *ngIf="loading">Učitavanje...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="faculties?.length; else noFaculties">
+  <ul class="faculty-list">
+    <li *ngFor="let f of faculties" class="faculty-card">
+    
+
+      <h3><a [routerLink]="['/faculty', f.id]">{{ f.name }}</a> </h3>
+
+      <p><strong>Adresa:</strong> {{ f.address }}</p>
+      <p><strong>Kontakt:</strong> {{ f.contact }}</p>
+      <p><strong>Opis:</strong> {{ f.description }}</p>
+      <p><strong>Dekan:</strong> {{ f.deanName }} ({{ f.deanEmail }})</p>
+    </li>
+  </ul>
+</div>
+
+<ng-template #noFaculties>
+  <p>Nema fakulteta u bazi.</p>
+</ng-template>

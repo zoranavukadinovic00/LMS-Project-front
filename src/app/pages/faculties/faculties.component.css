@@ -1,0 +1,42 @@
+/* centriraj ceo sadržaj horizontalno */
+.faculties-page {
+  display: flex;
+  justify-content: center;
+  padding: 24px 12px;
+}
+
+/* kutija ograničene širine u sredini */
+.faculties-box {
+  width: 100%;
+  max-width: 680px;      /* promeni po želji (npr. 560px) */
+  margin: 0 auto;
+}
+
+/* naslov po želji centriran */
+.title {
+  margin: 0 0 12px 0;
+  text-align: center;    /* ukloni ako želiš levo poravnanje */
+}
+
+/* lista popunjava samo širinu kutije */
+.faculty-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.faculty-list li {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+.faculty-card h3 a {
+  text-decoration: none;
+  color: inherit;
+}
+.faculty-card h3 a:hover {
+  text-decoration: underline;
+}
+

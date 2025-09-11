@@ -31,6 +31,13 @@
       Valid email is required.
     </div>
 
+    <label>Biography:</label>
+    <textarea formControlName="biography" rows="5"></textarea>
+    <div *ngIf="profileForm.get('biography')?.invalid && profileForm.get('biography')?.touched" class="validation-error">
+      Biography must be between 10 and 1000 characters.
+    </div>
+
+
     <button type="submit" [disabled]="profileForm.invalid">Save</button>
   </form>
 

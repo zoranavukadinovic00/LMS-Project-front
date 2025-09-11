@@ -1,20 +1,133 @@
-<div class="page-container" *ngIf="faculty">
-  <h1>{{ faculty.name }}</h1>
-  <div class="page-content">
-    <p><strong>Address:</strong> {{ faculty.address }}</p>
-    <p><strong>Rector:</strong> {{ faculty.rectorName }}</p>
-    <h2>Description</h2>
-    <p class="description">{{ faculty.description }}</p>
-    
+<div class="page-container">
+  <!-- Prikaz kada su podaci učitani -->
+  <div *ngIf="faculty && !loading && !error">
+    <h1>{{ faculty.name }}</h1>
 
-     <h2>Study programs</h2>
-    <ul class="list">
-      <li *ngFor="let studyProgram of studyPrograms">
-        <a [routerLink]="['/study-program', studyProgram.id]">{{ studyProgram.name }}</a>
-      </li>
-    </ul>
-    
+    <div class="page-content">
+      <!-- Osnovne informacije -->
+      <div class="faculty-info">
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Adresa:</strong>
+            <span *ngIf="faculty.address; else noAddress">{{ faculty.address }}</span>
+            <ng-template #noAddress>
+              <span class="no-data">Nije dostupno</span>
+            </ng-template>
+          </div>
+
+          <div class="info-item">
+            <strong>Kontakt:</strong>
+            <div *ngIf="faculty.contact; else noContact" class="contact-info">
+              <div *ngFor="let line of formatContact(faculty.contact)" class="contact-line">
+                {{ line }}
+              </div>
+            </div>
+            <ng-template #noContact>
+              <span class="no-data">Nije dostupno</span>
+            </ng-template>
+          </div>
+
+          <div class="info-item">
+            <strong>Univerzitet:</strong>
+            <span *ngIf="faculty.universityId; else noUniversity">
+              <a [routerLink]="['/university', faculty.universityId]" class="university-link">
+                Pogledaj univerzitet
+              </a>
+            </span>
+            <ng-template #noUniversity>
+              <span class="no-data">Nije dostupno</span>
+            </ng-template>
+          </div>
+
+          <div class="info-item">
+            <strong>Dekan:</strong>
+            <span *ngIf="faculty.deanName; else noDean">
+              {{ faculty.deanName }}
+              <span *ngIf="isValidEmail(faculty.deanEmail)" class="dean-email">
+                (<a href="mailto:{{ faculty.deanEmail }}">{{ faculty.deanEmail }}</a>)
+              </span>
+            </span>
+            <ng-template #noDean>
+              <span class="no-data">Nije dostupno</span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detaljne informacije o adresi -->
+      <div *ngIf="faculty.addressDetails" class="details-section">
+        <h2>Detaljne informacije o adresi</h2>
+        <div class="detail-card">
+          <div class="detail-grid">
+            <div class="detail-item">
+              <strong>Ulica:</strong>
+              <span>{{ faculty.addressDetails.street || 'N/A' }}</span>
+            </div>
+            <div class="detail-item">
+              <strong>Broj:</strong>
+              <span>{{ faculty.addressDetails.number || 'N/A' }}</span>
+            </div>
+            <div class="detail-item">
+              <strong>Grad:</strong>
+              <span>{{ faculty.addressDetails.city || 'N/A' }}</span>
+            </div>
+            <div class="detail-item">
+              <strong>Zemlja:</strong>
+              <span>{{ faculty.addressDetails.country || 'N/A' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detaljne informacije o dekanu -->
+      <div *ngIf="faculty.deanDetails" class="details-section">
+        <h2>Informacije o dekanu</h2>
+        <div class="detail-card">
+          <div class="detail-grid">
+            <div class="detail-item">
+              <strong>Ime i prezime:</strong>
+              <span>{{ faculty.deanDetails.fullName || 'N/A' }}</span>
+            </div>
+            <div class="detail-item">
+              <strong>Email:</strong>
+              <span *ngIf="isValidEmail(faculty.deanDetails.email); else noEmail">
+                <a href="mailto:{{ faculty.deanDetails.email }}">{{ faculty.deanDetails.email }}</a>
+              </span>
+              <ng-template #noEmail>
+                <span class="no-data">Nije dostupno</span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opis fakulteta -->
+      <div class="details-section">
+        <h2>Opis fakulteta</h2>
+        <div class="description">
+          <p *ngIf="faculty.description; else noDescription">{{ faculty.description }}</p>
+          <ng-template #noDescription>
+            <p class="no-data">Opis nije dostupan.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Učitavanje informacija o fakultetu...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error && !loading" class="error-container">
+    <div class="error-message">
+      <h2>Došlo je do greške</h2>
+      <p>{{ error }}</p>
+      <button class="retry-button" (click)="loadFacultyData()" type="button">
+        Pokušaj ponovo
+      </button>
+    </div>
   </div>
 </div>
-
-<div *ngIf="!faculty">Loading...</div>

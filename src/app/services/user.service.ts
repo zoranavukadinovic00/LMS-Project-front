@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { User } from '../model/user.model';
 
@@ -9,24 +9,26 @@ import { User } from '../model/user.model';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = '/api/user'; // real API endpoint for later
+  private apiUrl = 'http://localhost:8080/api/users'; 
 
   constructor(private http: HttpClient) {}
 
+  
+  private headers(token: string) {
+    return { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) };
+  }
+
   getUserByToken(token: string): Observable<User> {
-    // Real HTTP request example:
-     return this.http.get<User>(this.apiUrl, {
+    
+     return this.http.get<User>(this.apiUrl + '/my-profile', {
        headers: { Authorization: `Bearer ${token}` }
      });
 
   }
 
-  update(user: User): Observable<void> {
-    // Here you would call your backend API to update the profile, e.g.:
-     return this.http.put<void>(`${this.apiUrl}/${user.id}`, user);
+  update(token: string, user: User): Observable<void> {
+     return this.http.put<void>(`${this.apiUrl}/${user.id}`, user, this.headers(token));
 
-    // Dummy delay and success response
-    return of(void 0);
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CourseNotification } from '../../../../model/course-notification.model';
@@ -13,7 +13,7 @@ import { CourseNotificationService } from '../../../../services/course-notificat
 })
 export class NotificationUpdateComponent implements OnInit, OnChanges {
   @Input() item!: CourseNotification;   // { id, courseName?, title, content, postedAt? }
-  @Input() courseId!: number;           // VAŽNO: backend očekuje courseId u DTO
+  @Input() courseId!: number;           // backend očekuje courseId u DTO, ali dodaćemo fallback
   @Output() updated = new EventEmitter<CourseNotification>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -45,29 +45,34 @@ export class NotificationUpdateComponent implements OnInit, OnChanges {
     this.initForm();
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.initForm();
   }
 
   onSubmit(): void {
-    if (this.form.invalid || !this.item || !this.courseId) return;
+    // isti stil kao kod evaluation
+    if (this.form.invalid || !this.item) return;
+
     const token = localStorage.getItem('token');
     if (!token) return;
 
+    // Fallback: ako parent nije prosledio courseId, koristi onaj sa item-a
+    const resolvedCourseId = this.courseId ?? this.item.courseId;
+    if (!resolvedCourseId) return; // ako i dalje nema, izađi (kao i kod evaluation: tihi guard)
+
     const payload: CourseNotification = {
       id: this.item.id,
-      courseId: this.courseId,
+      courseId: resolvedCourseId,
       title: this.form.value.title,
-      content: this.form.value.content
+      content: this.form.value.content,
+      // postedAt: null // uključi samo ako backend traži eksplicitno null
     };
-   
 
     this.loading = true; 
     this.errorMsg = '';
 
     this.notificationService.updateNotification(token, payload).subscribe({
       next: (res) => {
-        this.item = res;
         this.updated.emit(res);
         this.onCancel();
       },

@@ -4,7 +4,6 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { UniversityComponent } from './pages/university/university.component';
 import { FacultyComponent } from './pages/faculty/faculty.component';
 import { StudyProgramComponent } from './pages/study-program/study-program.component';
-import { CourseComponent } from './pages/course/course.component';
 import { UpdateProfileComponent } from './pages/update-profile/update-profile.component';
 import { StudentEvaluationComponent } from './pages/student-evaluation/student-evaluation.component';
 import { ExamRegistrationComponent } from './pages/exam-registration/exam-registration.component';
@@ -15,15 +14,20 @@ import { ProfesorCoursesComponent } from './pages/professor/professor-courses/pr
 import { ProfessorSyllabusComponent } from './pages/professor/syllabus/professor-syllabus/professor-syllabus.component';
 import { ProfessorNotificationsComponent } from './pages/professor/notification/professor-notifications/professor-notifications.component';
 import { ProfessorEvaluationInstrumentComponent } from './pages/professor/evaluation-instrument/professor-evaluation-instrument/professor-evaluation-instrument.component';
+import { ProfessorTermTopicComponent } from './pages/professor/term-topic/professor-term-topic/professor-term-topic.component';
+import { CourseDetailsComponent } from './pages/professor/course-details/course-details.component';
+import { StudentOnYearTableComponent } from './pages/professor/student-on-year-table/student-on-year-table.component';
+import { FacultiesComponent } from './pages/faculties/faculties.component';
+
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
-  { path: 'university/:id', component: UniversityComponent },
+  { path: 'university', component: UniversityComponent },
   { path: 'faculty/:id', component: FacultyComponent },
+  { path: 'faculties', component: FacultiesComponent },
   { path: 'study-program/:id', component: StudyProgramComponent },
-  { path: 'course/:id', component: CourseComponent },
   { path: 'my-profile', component: UpdateProfileComponent },
   { path: 'my-history', component: StudentHistoryComponent },
   { path: 'my-notifications', component: StudentNotificationsComponent },
@@ -32,7 +36,9 @@ export const routes: Routes = [
   { path: 'exam-registration', component: ExamRegistrationComponent},
   { path: 'professor-evaluations/:id', component: ProfessorEvaluationInstrumentComponent },
   { path: 'professor-syllabus/:id', component: ProfessorSyllabusComponent },
-  { path: 'professor-notifications/:id', component: ProfessorNotificationsComponent }
-  
+  { path: 'professor-notifications/:id', component: ProfessorNotificationsComponent },
+  { path: 'professor-term-topic/:id', component: ProfessorTermTopicComponent },
+  { path: 'manage-courses/:courseId/details', component: CourseDetailsComponent },
+  { path: 'search-students', component: StudentOnYearTableComponent },
 
 ];

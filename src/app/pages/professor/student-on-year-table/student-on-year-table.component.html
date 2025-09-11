@@ -1,0 +1,91 @@
+<div class="container">
+  <h2>Search Students </h2>
+
+  <div *ngIf="loading" class="loading">Loading…</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- FILTRI -->
+  <form (ngSubmit)="search()" class="filters-card">
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Name</label>
+        <input [(ngModel)]="filters.name" name="name" class="form-control" placeholder="e.g. Ana" />
+      </div>
+      <div class="form-field">
+        <label>Surname</label>
+        <input [(ngModel)]="filters.surname" name="surname" class="form-control" placeholder="e.g. Jovanović" />
+      </div>
+      <div class="form-field">
+        <label>Index</label>
+        <input [(ngModel)]="filters.index" name="index" class="form-control" placeholder="e.g. 2023/1234" />
+      </div>
+      <div class="form-field">
+        <label>Enrollment Year</label>
+        <input [(ngModel)]="filters.enrollmentYear" name="enrollmentYear" type="number" class="form-control" placeholder="e.g. 2023" />
+      </div>
+      <div class="form-field">
+        <label>Study Year</label>
+        <input [(ngModel)]="filters.studyYear" name="studyYear" type="number" class="form-control" placeholder="1–4" />
+      </div>
+      <div class="form-field">
+        <label>Min Average Grade</label>
+        <input [(ngModel)]="filters.minAverageGrade" name="minAverageGrade" type="number" class="form-control" placeholder="6-10" />
+      </div>
+      <div class="form-field">
+        <label>Max Average Grade</label>
+        <input [(ngModel)]="filters.maxAverageGrade" name="maxAverageGrade" type="number" class="form-control" placeholder="6-10" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="button" class="btn btn-secondary" (click)="clearFilters()">Clear</button>
+    </div>
+  </form>
+
+  <!-- TABELA -->
+  <div class="table-card" *ngIf="students.length > 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Index</th>
+          <th>Enrollment Year</th>
+          <th>Study Year</th>
+          <th>Average Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of students">
+          <td>{{ s.student.name }}</td>
+          <td>{{ s.student.surname }}</td>
+          <td>{{ s.index }}</td>
+          <td>{{ s.dateOfEnrollment }}</td>
+          <td>{{ s.year }}</td>
+          <td>{{ s.averageGrade || '—' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- PAGINACIJA -->
+    <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="pagination-wrap">
+      <button class="page-btn" [disabled]="page === 0" (click)="changePage(page - 1)">‹ Prev</button>
+
+      <button
+        class="page-btn"
+        *ngFor="let p of [].constructor(totalPages); let i = index"
+        [class.active]="i === page"
+        (click)="changePage(i)"
+      >
+        {{ i + 1 }}
+      </button>
+
+      <button class="page-btn" [disabled]="page === totalPages - 1" (click)="changePage(page + 1)">Next ›</button>
+    </nav>
+  </div>
+
+  <div *ngIf="students.length === 0 && !loading" class="empty">
+    No results found.
+  </div>
+</div>

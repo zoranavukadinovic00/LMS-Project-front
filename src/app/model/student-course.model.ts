@@ -1,5 +1,5 @@
 export interface StudentCourse {
-  studentName: string,
+  studentFullName: string,
   courseName: string,
   status: string,
   grade: number,
