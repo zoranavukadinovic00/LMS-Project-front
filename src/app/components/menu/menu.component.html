@@ -1,27 +1,9 @@
 <nav class="navbar">
   <ul>
     <li>
-      <!--
-      <a
-        routerLink="/university/1"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >Home</a>-->
       
-      <!--
-      <a routerLink="/university" routerLinkActive="active">University</a>
-      <a routerLink="/faculty" routerLinkActive="active">Faculty</a>
-      <a routerLink="/study-programs" routerLinkActive="active">Study programs</a>
-      <a routerLink="/sylabuses" routerLinkActive="active">Sylabuses</a>
-      <a routerLink="/teaching-materials" routerLinkActive="active">Teaching materials</a>
-      -->
     </li>
-    <!-- <li>
-      <a routerLink="/university/1" routerLinkActive="active">University</a>
-    </li> -->
-
     
-    <!-- Not logged in -->
     <ng-container *ngIf="!role">
       <li>
         <a routerLink="/university" routerLinkActive="active">University</a>
@@ -34,7 +16,6 @@
       <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
     </ng-container>
 
-    <!-- Logged in -->
     <ng-container *ngIf="role">
       <li><a routerLink="/my-profile" routerLinkActive="active">Profile</a></li>
 

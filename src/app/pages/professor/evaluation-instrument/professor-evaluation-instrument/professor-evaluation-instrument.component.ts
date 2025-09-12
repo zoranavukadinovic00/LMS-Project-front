@@ -52,12 +52,12 @@ export class ProfessorEvaluationInstrumentComponent implements OnInit {
     });
   }
 
-  // UI
+  
   openCreate() { this.rightPanel = 'create'; this.editing = null; }
   openUpdate(item: EvaluationInstrument) { this.rightPanel = 'update'; this.editing = item; }
   closePanel() { this.rightPanel = 'none'; this.editing = null; }
 
-  // Events from children
+ 
   onCreated(created: EvaluationInstrument) {
     this.evaluationInstruments = [...this.evaluationInstruments, created];
     this.closePanel();
@@ -70,7 +70,7 @@ export class ProfessorEvaluationInstrumentComponent implements OnInit {
     this.closePanel();
   }
 
-  // Delete
+  
   delete(item: EvaluationInstrument) {
     const token = localStorage.getItem('token');
     if (!token) return;

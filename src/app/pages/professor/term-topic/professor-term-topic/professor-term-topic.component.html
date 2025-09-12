@@ -29,7 +29,7 @@
   </div>
 
   <div class="right" *ngIf="rightPanel !== 'none'">
-    <!-- Create -->
+ 
     <app-term-topic-create
       *ngIf="rightPanel === 'create' && courseId"
       [courseId]="courseId!"
@@ -37,7 +37,7 @@
       (cancel)="closePanel()">
     </app-term-topic-create>
 
-    <!-- Update -->
+
     <app-term-topic-update
       *ngIf="rightPanel === 'update' && editing"
       [item]="editing!"

@@ -15,7 +15,7 @@ export class TermTopicService {
     return { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) };
   }
 
-  // GET /api/term-topics/by_course/{courseId}
+  
   getByCourse(token: string, courseId: number): Observable<TermTopic[]> {
     return this.http.get<TermTopic[]>(
       `${this.apiUrl}/by_course/${courseId}`,
@@ -23,7 +23,7 @@ export class TermTopicService {
     );
   }
 
-  // POST /api/term-topics
+  
   createTermTopic(token: string, payload: TermTopic): Observable<TermTopic> {
     return this.http.post<TermTopic>(
       `${this.apiUrl}`,
@@ -32,7 +32,7 @@ export class TermTopicService {
     );
   }
 
-  // PUT /api/term-topics/{id}
+  
   updateTermTopic(token: string, payload: TermTopic): Observable<TermTopic> {
     return this.http.put<TermTopic>(
       `${this.apiUrl}/${payload.id}`,
@@ -41,7 +41,7 @@ export class TermTopicService {
     );
   }
 
-  // DELETE /api/term-topics/{id}
+ 
   deleteTermTopic(token: string, id: number): Observable<void> {
     return this.http.delete<void>(
       `${this.apiUrl}/${id}`,

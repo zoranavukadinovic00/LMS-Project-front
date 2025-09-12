@@ -38,7 +38,7 @@ export class EvaluationInstrumentCreateComponent implements OnInit {
     if (!token) return;
 
     const payload: EvaluationInstrument = {
-      id: 0, // backend should assign real id
+      id: 0, 
       name: this.form.value.name,
       points: Number(this.form.value.points),
       courseId: this.courseId

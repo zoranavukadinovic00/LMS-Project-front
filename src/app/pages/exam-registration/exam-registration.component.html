@@ -1,7 +1,7 @@
 <div class="exam-registration">
   <h2>Exam Registration</h2>
 
-  <!-- Select Exam Period -->
+ 
   <label for="period">Select Exam Period:</label>
   <select id="period" [(ngModel)]="selectedPeriodId" (change)="onPeriodChange()">
     <option [value]="null" disabled selected>Select a period</option>
@@ -10,7 +10,7 @@
 
   <div *ngIf="loadingExams">Loading available exams...</div>
 
-  <!-- Available Exams -->
+  
   <div *ngIf="availableExams.length > 0">
     <h3>Available Exams</h3>
     <ul>
@@ -26,7 +26,7 @@
     <button class="button-primary" (click)="registerSelectedExams()">Register Selected Exams</button>
   </div>
 
-  <!-- Messages -->
+  
   <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
   <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
 </div>

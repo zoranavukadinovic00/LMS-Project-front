@@ -34,10 +34,10 @@ export class UniversityService {
     let errorMessage = 'An unexpected error occurred';
 
     if (error.error instanceof ErrorEvent) {
-      // Client-side or network error
+    
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Backend returned an unsuccessful response code
+      
       switch (error.status) {
         case 400:
           errorMessage = 'Bad request - please check your input';

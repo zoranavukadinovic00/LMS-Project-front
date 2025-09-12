@@ -1,24 +1,25 @@
-/* centriraj ceo sadržaj horizontalno */
 .faculties-page {
   display: flex;
   justify-content: center;
-  padding: 24px 12px;
+  padding: 28px 16px;
+  background: #f7f7fb;
 }
 
-/* kutija ograničene širine u sredini */
 .faculties-box {
   width: 100%;
-  max-width: 680px;      /* promeni po želji (npr. 560px) */
+  max-width: 720px;
   margin: 0 auto;
 }
 
-/* naslov po želji centriran */
 .title {
-  margin: 0 0 12px 0;
-  text-align: center;    /* ukloni ako želiš levo poravnanje */
+  margin: 0 0 14px 0;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: .2px;
 }
 
-/* lista popunjava samo širinu kutije */
 .faculty-list {
   list-style: none;
   padding: 0;
@@ -27,16 +28,63 @@
 
 .faculty-list li {
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px 16px;
-  margin-bottom: 12px;
+  border: 1px solid #e6e6ef;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 6px rgba(17, 24, 39, 0.04);
+  transition: box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
+
+.faculty-list li:hover {
+  background: #fcfcff;
+  border-color: #ddddef;
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.06);
+}
+
+.faculty-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.22rem;
+  color: #0f172a;
+  letter-spacing: .1px;
+}
+
 .faculty-card h3 a {
   text-decoration: none;
   color: inherit;
 }
+
 .faculty-card h3 a:hover {
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
+.faculty-card p {
+  margin: 6px 0;
+  color: #3a3a48;
+  line-height: 1.55;
+}
+
+.faculty-card p strong {
+  display: inline-block;
+  min-width: 96px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.error {
+  color: #b91c1c;
+  background: #feecec;
+  border: 1px solid #f9caca;
+  padding: 10px 12px;
+  border-radius: 10px;
+  max-width: 720px;
+  margin: 12px auto;
+}
+
+@media (max-width: 480px) {
+  .faculties-page { padding: 22px 12px; }
+  .faculty-list li { padding: 14px 16px; }
+  .faculty-card p strong { min-width: 88px; }
+  .title { font-size: 1.4rem; }
+}

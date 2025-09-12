@@ -12,7 +12,7 @@ export class FacultyService {
 
   constructor(private http: HttpClient) {}
 
-  /** Get a single faculty by ID */
+  
   getById(id: string): Observable<Faculty> {
     if (!id || id.trim() === '') {
       return throwError(() => new Error('Faculty ID is required'));
@@ -27,7 +27,7 @@ export class FacultyService {
     );
   }
 
-  /** Get all faculties */
+  
   getAll(): Observable<Faculty[]> {
     return this.http.get<Faculty[]>(this.apiUrl).pipe(
       retry(2),
@@ -35,7 +35,7 @@ export class FacultyService {
     );
   }
 
-  /** Get faculties for a specific university (for public “faculty pages” lists) */
+  
   getByUniversityId(universityId: number | string): Observable<Faculty[]> {
     const id = String(universityId);
     if (!id || id.trim() === '') {
@@ -51,15 +51,15 @@ export class FacultyService {
     );
   }
 
-  /** Centralized error handler (same pattern as UniversityService) */
+  
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unexpected error occurred';
 
     if (error.error instanceof ErrorEvent) {
-      // Client-side or network error
+     
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Backend returned an unsuccessful response code
+      
       switch (error.status) {
         case 400:
           errorMessage = 'Bad request - please check your input';

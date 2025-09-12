@@ -60,7 +60,7 @@ export class StudentOnYearTableComponent implements OnInit {
   }
 
   search(): void {
-    this.page = 0; // reset to first page on search
+    this.page = 0; 
     this.load();
   }
 

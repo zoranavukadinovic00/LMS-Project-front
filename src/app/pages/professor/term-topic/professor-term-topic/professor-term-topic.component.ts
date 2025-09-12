@@ -59,12 +59,12 @@ export class ProfessorTermTopicComponent implements OnInit {
     });
   }
 
-  // UI
+ 
   openCreate() { this.rightPanel = 'create'; this.editing = null; }
   openUpdate(item: TermTopic) { this.rightPanel = 'update'; this.editing = item; }
   closePanel() { this.rightPanel = 'none'; this.editing = null; }
 
-  // child events
+ 
   onCreated(created: TermTopic) {
     this.termTopics = this.sortTopics([...this.termTopics, created]);
     this.closePanel();
@@ -77,7 +77,7 @@ export class ProfessorTermTopicComponent implements OnInit {
     this.closePanel();
   }
 
-  // Delete
+  
   delete(item: TermTopic) {
     const token = localStorage.getItem('token');
     if (!token) return;

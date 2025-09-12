@@ -10,7 +10,7 @@ import { StudentEvaluation } from '../model/student-evaluation.model';
 })
 export class StudentEvaluationService {
 
-  private apiUrl = 'http://localhost:8080/api/student-evaluations';  // adjust your backend URL here
+  private apiUrl = 'http://localhost:8080/api/student-evaluations'; 
 
   constructor(private http: HttpClient) {}
 

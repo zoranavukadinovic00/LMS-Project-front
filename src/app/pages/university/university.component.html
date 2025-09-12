@@ -1,5 +1,5 @@
 <div class="page-container">
-  <!-- View when data is loaded -->
+ 
   <div *ngIf="university && !loading && !error">
     <h1>{{ university.name }}</h1>
 
@@ -55,13 +55,13 @@
     </div>
   </div>
 
-  <!-- Loading state -->
+ 
   <div *ngIf="loading" class="loading">
     <div class="spinner"></div>
     <p>Loading university information...</p>
   </div>
 
-  <!-- Error state -->
+  
   <div *ngIf="error && !loading" class="error-container">
     <div class="error-message">
       <h2>An error occurred</h2>

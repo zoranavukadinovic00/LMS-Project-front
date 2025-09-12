@@ -67,7 +67,7 @@ export class ProfessorNotificationsComponent implements OnInit {
     });
   }
 
-  // === UI state ===
+  
   openCreate(): void {
     this.rightPanel = 'create';
     this.editing = null;
@@ -83,7 +83,7 @@ export class ProfessorNotificationsComponent implements OnInit {
     this.editing = null;
   }
 
-  // === Child outputs ===
+  
   onCreated(created: CourseNotification): void {
     this.notifications = [created, ...this.notifications];
     this.closePanel();
@@ -96,7 +96,7 @@ export class ProfessorNotificationsComponent implements OnInit {
     this.closePanel();
   }
 
-  // === Delete ===
+  
   delete(note: CourseNotification): void {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -115,7 +115,7 @@ export class ProfessorNotificationsComponent implements OnInit {
     });
   }
 
-  // === ngFor performance ===
+  
   trackById(_index: number, item: CourseNotification): number | string | undefined {
     return item.id;
   }

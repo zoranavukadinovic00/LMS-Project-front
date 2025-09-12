@@ -2,14 +2,14 @@
   <h3 class="panel-title">Update Notification</h3>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
-    <!-- Title -->
+   
     <label class="label">Title</label>
     <input type="text" class="input" formControlName="title" />
     <div class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
       Title is required (max 200 chars).
     </div>
 
-    <!-- Content -->
+    
     <label class="label">Content</label>
     <textarea class="input" formControlName="content" rows="5"></textarea>
     <div class="error" *ngIf="form.get('content')?.touched && form.get('content')?.invalid">

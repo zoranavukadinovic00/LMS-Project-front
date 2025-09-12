@@ -1,46 +1,46 @@
 <div class="page-container">
-  <!-- Prikaz kada su podaci učitani -->
+  <!-- Display when data is loaded -->
   <div *ngIf="faculty && !loading && !error">
     <h1>{{ faculty.name }}</h1>
 
     <div class="page-content">
-      <!-- Osnovne informacije -->
+      <!-- Basic information -->
       <div class="faculty-info">
         <div class="info-grid">
           <div class="info-item">
-            <strong>Adresa:</strong>
+            <strong>Address:</strong>
             <span *ngIf="faculty.address; else noAddress">{{ faculty.address }}</span>
             <ng-template #noAddress>
-              <span class="no-data">Nije dostupno</span>
+              <span class="no-data">Not available</span>
             </ng-template>
           </div>
 
           <div class="info-item">
-            <strong>Kontakt:</strong>
+            <strong>Contact:</strong>
             <div *ngIf="faculty.contact; else noContact" class="contact-info">
               <div *ngFor="let line of formatContact(faculty.contact)" class="contact-line">
                 {{ line }}
               </div>
             </div>
             <ng-template #noContact>
-              <span class="no-data">Nije dostupno</span>
+              <span class="no-data">Not available</span>
             </ng-template>
           </div>
 
           <div class="info-item">
-            <strong>Univerzitet:</strong>
+            <strong>University:</strong>
             <span *ngIf="faculty.universityId; else noUniversity">
               <a [routerLink]="['/university', faculty.universityId]" class="university-link">
-                Pogledaj univerzitet
+                View university
               </a>
             </span>
             <ng-template #noUniversity>
-              <span class="no-data">Nije dostupno</span>
+              <span class="no-data">Not available</span>
             </ng-template>
           </div>
 
           <div class="info-item">
-            <strong>Dekan:</strong>
+            <strong>Dean:</strong>
             <span *ngIf="faculty.deanName; else noDean">
               {{ faculty.deanName }}
               <span *ngIf="isValidEmail(faculty.deanEmail)" class="dean-email">
@@ -48,44 +48,44 @@
               </span>
             </span>
             <ng-template #noDean>
-              <span class="no-data">Nije dostupno</span>
+              <span class="no-data">Not available</span>
             </ng-template>
           </div>
         </div>
       </div>
 
-      <!-- Detaljne informacije o adresi -->
+      <!-- Detailed address information -->
       <div *ngIf="faculty.addressDetails" class="details-section">
-        <h2>Detaljne informacije o adresi</h2>
+        <h2>Detailed address information</h2>
         <div class="detail-card">
           <div class="detail-grid">
             <div class="detail-item">
-              <strong>Ulica:</strong>
+              <strong>Street:</strong>
               <span>{{ faculty.addressDetails.street || 'N/A' }}</span>
             </div>
             <div class="detail-item">
-              <strong>Broj:</strong>
+              <strong>Number:</strong>
               <span>{{ faculty.addressDetails.number || 'N/A' }}</span>
             </div>
             <div class="detail-item">
-              <strong>Grad:</strong>
+              <strong>City:</strong>
               <span>{{ faculty.addressDetails.city || 'N/A' }}</span>
             </div>
             <div class="detail-item">
-              <strong>Zemlja:</strong>
+              <strong>Country:</strong>
               <span>{{ faculty.addressDetails.country || 'N/A' }}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Detaljne informacije o dekanu -->
+      <!-- Detailed dean information -->
       <div *ngIf="faculty.deanDetails" class="details-section">
-        <h2>Informacije o dekanu</h2>
+        <h2>Dean information</h2>
         <div class="detail-card">
           <div class="detail-grid">
             <div class="detail-item">
-              <strong>Ime i prezime:</strong>
+              <strong>Full name:</strong>
               <span>{{ faculty.deanDetails.fullName || 'N/A' }}</span>
             </div>
             <div class="detail-item">
@@ -94,20 +94,20 @@
                 <a href="mailto:{{ faculty.deanDetails.email }}">{{ faculty.deanDetails.email }}</a>
               </span>
               <ng-template #noEmail>
-                <span class="no-data">Nije dostupno</span>
+                <span class="no-data">Not available</span>
               </ng-template>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Opis fakulteta -->
+      <!-- Faculty description -->
       <div class="details-section">
-        <h2>Opis fakulteta</h2>
+        <h2>Faculty description</h2>
         <div class="description">
           <p *ngIf="faculty.description; else noDescription">{{ faculty.description }}</p>
           <ng-template #noDescription>
-            <p class="no-data">Opis nije dostupan.</p>
+            <p class="no-data">Description not available.</p>
           </ng-template>
         </div>
       </div>
@@ -117,16 +117,16 @@
   <!-- Loading state -->
   <div *ngIf="loading" class="loading">
     <div class="spinner"></div>
-    <p>Učitavanje informacija o fakultetu...</p>
+    <p>Loading faculty information...</p>
   </div>
 
   <!-- Error state -->
   <div *ngIf="error && !loading" class="error-container">
     <div class="error-message">
-      <h2>Došlo je do greške</h2>
+      <h2>An error occurred</h2>
       <p>{{ error }}</p>
       <button class="retry-button" (click)="loadFacultyData()" type="button">
-        Pokušaj ponovo
+        Try again
       </button>
     </div>
   </div>

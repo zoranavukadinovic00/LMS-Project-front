@@ -21,7 +21,7 @@ export class UpdateProfileComponent implements OnInit {
   loading = false;
   successMessage = '';
   errorMessage = '';
-  userId!: number; // store the ID here
+  userId!: number;
 
   constructor(private fb: FormBuilder, private userService: UserService) {}
 
@@ -42,7 +42,7 @@ export class UpdateProfileComponent implements OnInit {
     const token = localStorage.getItem('token');
     if (token) {
       this.userService.getUserByToken(token).subscribe((user: User) => {
-        this.userId = user.id; // save the id
+        this.userId = user.id; 
         this.profileForm.patchValue(user);
       });
     }
@@ -63,7 +63,7 @@ export class UpdateProfileComponent implements OnInit {
 
     this.loading = true;
 
-    // include the id in the payload
+   
     const updatedProfile: User = {
       id: this.userId,
       ...this.profileForm.value,

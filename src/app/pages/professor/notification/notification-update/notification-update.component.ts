@@ -12,8 +12,8 @@ import { CourseNotificationService } from '../../../../services/course-notificat
   styleUrls: ['./notification-update.component.css']
 })
 export class NotificationUpdateComponent implements OnInit, OnChanges {
-  @Input() item!: CourseNotification;   // { id, courseName?, title, content, postedAt? }
-  @Input() courseId!: number;           // backend očekuje courseId u DTO, ali dodaćemo fallback
+  @Input() item!: CourseNotification;   
+  @Input() courseId!: number;          
   @Output() updated = new EventEmitter<CourseNotification>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -50,22 +50,22 @@ export class NotificationUpdateComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    // isti stil kao kod evaluation
+    
     if (this.form.invalid || !this.item) return;
 
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    // Fallback: ako parent nije prosledio courseId, koristi onaj sa item-a
+    
     const resolvedCourseId = this.courseId ?? this.item.courseId;
-    if (!resolvedCourseId) return; // ako i dalje nema, izađi (kao i kod evaluation: tihi guard)
+    if (!resolvedCourseId) return;
 
     const payload: CourseNotification = {
       id: this.item.id,
       courseId: resolvedCourseId,
       title: this.form.value.title,
       content: this.form.value.content,
-      // postedAt: null // uključi samo ako backend traži eksplicitno null
+      
     };
 
     this.loading = true; 

@@ -2,7 +2,7 @@
   <h3 class="panel-title">Update Term Topic</h3>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form" novalidate>
-    <!-- Term number -->
+    
     <label class="label">Term number</label>
     <input
       type="number"
@@ -20,7 +20,7 @@
       </ng-container>
     </div>
 
-    <!-- Description -->
+   
     <label class="label">Description (Outcome/Topic)</label>
     <textarea
       rows="8"
@@ -31,7 +31,7 @@
       Description is required (max 2000 chars).
     </div>
 
-    <!-- Server/HTTP error -->
+    
     <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
 
     <div class="actions">

@@ -12,7 +12,7 @@ import { SyllabusService } from '../../../../services/syllabus.service';
   styleUrls: ['./syllabus-update.component.css']
 })
 export class SyllabusUpdateComponent implements OnInit, OnChanges {
-  @Input() item!: Syllabus;                 // { id, description, courseId }
+  @Input() item!: Syllabus;                
   @Output() updated = new EventEmitter<Syllabus>();
   @Output() cancel = new EventEmitter<void>();
 

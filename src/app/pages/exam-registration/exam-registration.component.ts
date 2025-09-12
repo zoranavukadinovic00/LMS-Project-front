@@ -19,8 +19,8 @@ export class ExamRegistrationComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
 
-  token = 'student-auth-token'; // Normally from AuthService
-  useMock = true; // Switch to false to call real backend
+  token = 'student-auth-token'; 
+  useMock = true; 
 
   loadingPeriods = false;
   loadingExams = false;

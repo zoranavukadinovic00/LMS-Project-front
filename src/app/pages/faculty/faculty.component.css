@@ -24,7 +24,7 @@ h2 {
   padding-bottom: 10px;
 }
 
-/* Main faculty info section */
+
 .faculty-info {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border-radius: 12px;
@@ -67,7 +67,6 @@ h2 {
   line-height: 1.6;
 }
 
-/* Contact info styling */
 .contact-info {
   display: flex;
   flex-direction: column;
@@ -83,7 +82,7 @@ h2 {
   border-bottom: none;
 }
 
-/* Links */
+
 .university-link {
   color: #3498db;
   text-decoration: none;
@@ -107,7 +106,7 @@ h2 {
   text-decoration: underline;
 }
 
-/* Details sections */
+
 .details-section {
   margin: 40px 0;
 }
@@ -145,7 +144,7 @@ h2 {
   color: #555;
 }
 
-/* Description section */
+
 .description {
   background: #ffffff;
   border: 1px solid #e9ecef;
@@ -162,14 +161,14 @@ h2 {
   color: #444;
 }
 
-/* No data styling */
+
 .no-data {
   color: #95a5a6;
   font-style: italic;
   font-size: 0.95rem;
 }
 
-/* Loading styles */
+
 .loading {
   display: flex;
   flex-direction: column;

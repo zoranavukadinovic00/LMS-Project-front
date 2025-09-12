@@ -13,7 +13,7 @@ import { TermTopicService } from '../../../../services/term-topic.service';
   styleUrls: ['./term-topic-update.component.css']
 })
 export class TermTopicUpdateComponent implements OnInit, OnChanges {
-  @Input() item!: TermTopic; // { id, description, termNumber, courseId }
+  @Input() item!: TermTopic; 
   @Output() updated = new EventEmitter<TermTopic>();
   @Output() cancel = new EventEmitter<void>();
 

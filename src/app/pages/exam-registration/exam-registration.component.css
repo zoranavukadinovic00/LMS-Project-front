@@ -6,12 +6,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
-/* 
-.exam-registration h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  color: #333;
-} */
+
 
 .exam-registration label {
   display: block;
@@ -61,23 +56,7 @@
   margin-right: 0.6rem;
   transform: scale(1.2);
 }
-/* 
-.button-primary {
-  display: inline-block;
-  background-color: #007bff;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
 
-.button-primary:hover {
-  background-color: #0056b3; */
-/* } */
 
 .success {
   margin-top: 1rem;

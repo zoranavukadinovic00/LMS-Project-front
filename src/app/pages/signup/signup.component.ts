@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
   imports: [
-    ReactiveFormsModule, // <-- this is needed for formGroup and formControlName
+    ReactiveFormsModule, 
     CommonModule,
     RouterModule,
   ],

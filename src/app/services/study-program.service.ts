@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { StudyProgram } from '../model/study-program.model';
-import { Course } from '../model/course.model';
+
 
 
 

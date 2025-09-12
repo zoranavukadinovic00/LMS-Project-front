@@ -38,13 +38,12 @@ export class FacultyComponent implements OnInit, OnDestroy {
     const id = this.route.snapshot.paramMap.get('id');
     
     if (!id) {
-      this.handleError('Nedostaje ID fakulteta u ruti.');
+      this.handleError('Faculty ID is missing in the route.');
       return;
     }
 
-    // Validacija ID-ja
     if (!/^\d+$/.test(id)) {
-      this.handleError('Nevalidan ID fakulteta.');
+      this.handleError('Invalid faculty ID.');
       return;
     }
 
@@ -61,13 +60,13 @@ export class FacultyComponent implements OnInit, OnDestroy {
           this.faculty = faculty;
         },
         error: (error) => {
-          console.error('Greška pri učitavanju fakulteta:', error);
+          console.error('Error loading faculty:', error);
           if (error.status === 404) {
-            this.handleError('Fakultet sa datim ID-jem ne postoji.');
+            this.handleError('Faculty with the given ID does not exist.');
           } else if (error.status === 500) {
-            this.handleError('Greška na serveru. Molimo pokušajte ponovo kasnije.');
+            this.handleError('Server error. Please try again later.');
           } else {
-            this.handleError('Greška pri učitavanju podataka o fakultetu.');
+            this.handleError('Error loading faculty data.');
           }
         }
       });
@@ -86,16 +85,14 @@ export class FacultyComponent implements OnInit, OnDestroy {
       .filter(line => line.length > 0);
   }
 
-  // Helper metoda za proveru da li postoji validna email adresa
   isValidEmail(email?: string): boolean {
     if (!email) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
-  // Helper metoda za formatiranje kontakt podataka kao HTML
   formatContactAsHtml(contact?: string): string {
-    if (!contact) return 'Nije dostupno';
+    if (!contact) return 'Not available';
     return contact.split('\n')
       .map(line => line.trim())
       .filter(line => line.length > 0)

@@ -47,7 +47,7 @@ export class UniversityComponent implements OnInit, OnDestroy {
         next: (university) => {
           this.university = university;
           if (university.dateOfEstablishment) {
-            // Convert incoming date string to a Date object
+            
             university.dateOfEstablishment = new Date(university.dateOfEstablishment);
           }
         },
@@ -70,7 +70,7 @@ export class UniversityComponent implements OnInit, OnDestroy {
     this.university = null;
   }
 
-  // Helper for formatting dates
+  
   formatDate(date: Date | string): string {
     if (!date) return 'N/A';
 

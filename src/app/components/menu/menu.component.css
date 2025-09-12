@@ -1,6 +1,5 @@
 .navbar {
   background-color: var(--color-accent) ;
-  /* padding: 0.5rem 1rem; */
   padding: 20px;
 }
 
@@ -23,6 +22,6 @@
 
 .navbar a.active {
   background-color: var(--color-primary);
-  /* border-radius:  */
+  
 }
 

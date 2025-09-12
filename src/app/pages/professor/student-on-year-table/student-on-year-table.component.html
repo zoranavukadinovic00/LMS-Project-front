@@ -4,7 +4,7 @@
   <div *ngIf="loading" class="loading">Loading…</div>
   <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-  <!-- FILTRI -->
+  
   <form (ngSubmit)="search()" class="filters-card">
     <div class="form-grid">
       <div class="form-field">
@@ -43,7 +43,7 @@
     </div>
   </form>
 
-  <!-- TABELA -->
+  
   <div class="table-card" *ngIf="students.length > 0">
     <table class="table">
       <thead>
@@ -68,7 +68,7 @@
       </tbody>
     </table>
 
-    <!-- PAGINACIJA -->
+   
     <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="pagination-wrap">
       <button class="page-btn" [disabled]="page === 0" (click)="changePage(page - 1)">‹ Prev</button>
 

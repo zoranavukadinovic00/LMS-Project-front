@@ -48,12 +48,12 @@ export class ProfessorSyllabusComponent implements OnInit {
     });
   }
 
-  // UI
+  
   openCreate() { this.rightPanel = 'create'; this.editing = null; }
   openUpdate(item: Syllabus) { this.rightPanel = 'update'; this.editing = item; }
   closePanel() { this.rightPanel = 'none'; this.editing = null; }
 
-  // event handlers iz child-a
+  
   onCreated(created: Syllabus) {
     this.syllabuses = [...this.syllabuses, created];
     this.closePanel();
@@ -63,7 +63,7 @@ export class ProfessorSyllabusComponent implements OnInit {
     this.closePanel();
   }
 
-  // Delete ostaje ovde
+  
   delete(item: Syllabus) {
     const token = localStorage.getItem('token');
     if (!token) return;
