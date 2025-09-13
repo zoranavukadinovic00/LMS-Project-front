@@ -1,0 +1,29 @@
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<section class="page" *ngIf="!loading && !error">
+  <h1 class="title">{{ facultyName || 'Study programs' }}</h1>
+
+  <ng-container *ngIf="programs?.length; else noPrograms">
+    <article *ngFor="let p of programs" class="program-card">
+      <h3><a [routerLink]="['/programs', p.id, 'courses']" [queryParams]="{ name: p.name }">{{ p.name }}</a></h3>
+
+
+      <p *ngIf="p.description">{{ p.description }}</p>
+
+      <p *ngIf="p.managerName || p.managerSurname || p.managerEmail">
+        <strong>Program head:</strong>
+        <ng-container *ngIf="p.managerName || p.managerSurname">
+          {{ p.managerName }}<span *ngIf="p.managerName && p.managerSurname">&nbsp;</span>{{ p.managerSurname }}
+        </ng-container>
+        <ng-container *ngIf="p.managerEmail">
+          ( <a [href]="'mailto:' + p.managerEmail">{{ p.managerEmail }}</a> )
+        </ng-container>
+      </p>
+    </article>
+  </ng-container>
+
+  <ng-template #noPrograms>
+    <p>No study programs for this faculty.</p>
+  </ng-template>
+</section>

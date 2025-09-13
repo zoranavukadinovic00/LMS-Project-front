@@ -21,7 +21,7 @@ export class CourseService {
    }
 
    getByStudyProgramId(studyProgramId: number | string): Observable<Course[]> {
-     return this.http.get<Course[]>(`${this.apiUrl}/studyProgram/${studyProgramId}`);
+     return this.http.get<Course[]>(`${this.apiUrl}/forStudyProgram/${studyProgramId}`);
    }
 
    getStudentCourses(token: string): Observable<Course[]> {

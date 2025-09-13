@@ -18,6 +18,8 @@ import { ProfessorTermTopicComponent } from './pages/professor/term-topic/profes
 import { CourseDetailsComponent } from './pages/professor/course-details/course-details.component';
 import { StudentOnYearTableComponent } from './pages/professor/student-on-year-table/student-on-year-table.component';
 import { FacultiesComponent } from './pages/faculties/faculties.component';
+import { FacultyProgramsComponent } from './pages/faculty-programs/faculty-programs.component';
+import { ProgramCoursesComponent } from './pages/program-courses/program-courses.component';
 
 
 export const routes: Routes = [
@@ -25,9 +27,10 @@ export const routes: Routes = [
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'university', component: UniversityComponent },
-  { path: 'faculty/:id', component: FacultyComponent },
+  { path: 'faculty/:id', component: FacultyProgramsComponent },
   { path: 'faculties', component: FacultiesComponent },
   { path: 'study-program/:id', component: StudyProgramComponent },
+  { path: 'programs/:programId/courses', component: ProgramCoursesComponent },
   { path: 'my-profile', component: UpdateProfileComponent },
   { path: 'my-history', component: StudentHistoryComponent },
   { path: 'my-notifications', component: StudentNotificationsComponent },

@@ -1,0 +1,20 @@
+<div *ngIf="loading">Loading courses...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<section class="page" *ngIf="!loading && !error">
+  <h1 class="title">{{ programName || 'Study program' }} — Courses</h1>
+
+  <ng-container *ngIf="courses?.length; else noCourses">
+    <ul class="course-list">
+      <li *ngFor="let c of courses">
+        <div class="course-name">{{ c.name }}</div>
+        <div class="course-meta" *ngIf="c.espbPoints">ECTS: {{ c.espbPoints }}</div>
+        
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #noCourses>
+    <p>No courses for this program.</p>
+  </ng-template>
+</section>
