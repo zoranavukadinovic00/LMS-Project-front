@@ -30,6 +30,14 @@ export class UniversityService {
     );
   }
 
+  // Dodat metod za ažuriranje univerziteta
+  updateUniversity(university: University): Observable<University> {
+    return this.http.put<University>(`${this.apiUrl}/${university.id}`, university).pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unexpected error occurred';
 

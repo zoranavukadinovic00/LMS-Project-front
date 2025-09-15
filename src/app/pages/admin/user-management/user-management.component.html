@@ -1,0 +1,74 @@
+<div class="container">
+  <h2>User Management</h2>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="selectedUser" class="edit-form">
+    <h3>Edit User: {{ selectedUser.username }}</h3>
+    <form (ngSubmit)="saveUser()">
+      <label>
+        Username:
+        <input type="text" [(ngModel)]="selectedUser.username" name="username" required>
+      </label>
+      <label>
+        Email:
+        <input type="email" [(ngModel)]="selectedUser.email" name="email" required>
+      </label>
+      <label>
+        Name:
+        <input type="text" [(ngModel)]="selectedUser.name" name="name" required>
+      </label>
+      <label>
+        Surname:
+        <input type="text" [(ngModel)]="selectedUser.surname" name="surname" required>
+      </label>
+      <label>
+        JMBG:
+        <input type="text" [(ngModel)]="selectedUser.jmbg" name="jmbg" required>
+      </label>
+      <label>
+        Biography:
+        <textarea [(ngModel)]="selectedUser.biography" name="biography"></textarea>
+      </label>
+      <label>
+        Role:
+        <input type="text" [(ngModel)]="selectedUser.role" name="role" required>
+      </label>
+      <button type="submit">Save</button>
+      <button type="button" (click)="cancelEdit()">Cancel</button>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>JMBG</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.surname }}</td>
+          <td>{{ user.jmbg }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button class="edit-btn" (click)="editUser(user)">Edit</button>
+            <button class="delete-btn" (click)="deleteUser(user.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

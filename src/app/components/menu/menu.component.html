@@ -53,12 +53,17 @@
         >
       </li>
 
-      <li *ngIf="role === 'ADMIN'">
-        <a routerLink="/admin-panel" routerLinkActive="active">Admin Panel</a>
-        <a routerLink="/user-management" routerLinkActive="active"
-          >User Management</a
-        >
-      </li>
+      <ng-container *ngIf="role === 'ADMIN'">
+        <li>
+          <a routerLink="/admin/users" routerLinkActive="active">User Management</a>
+        </li>
+        <li>
+          <a routerLink="/admin/study-programs" routerLinkActive="active">Study Programs</a>
+        </li>
+        <li>
+          <a routerLink="/admin/university" routerLinkActive="active">University Administration</a>
+        </li>
+      </ng-container>
 
       <li><a href="/login" (click)="logout()">Logout</a></li>
     </ng-container>

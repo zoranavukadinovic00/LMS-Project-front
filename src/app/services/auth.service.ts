@@ -14,14 +14,13 @@ export class AuthService {
      return this.http.post(`${API_URL}/login`, credentials);
   }
 
-  
-
   signup(data: { email: string; password: string }): Observable<any> {
     return this.http.post(`${API_URL}/register`, data);
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('role'); // ✨ Dodato: obrišite i ulogu
   }
 
   saveTokenAndRole(token: string, role: string) {
@@ -31,6 +30,11 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  // ✨ Dodata metoda za dobijanje uloge korisnika
+  getLoggedInUserRole(): string | null {
+    return localStorage.getItem('role');
   }
 
   isAuthenticated(): boolean {

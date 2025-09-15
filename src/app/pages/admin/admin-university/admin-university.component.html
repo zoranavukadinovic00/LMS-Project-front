@@ -1,0 +1,36 @@
+<div class="page-container">
+    <h2>University Administration</h2>
+
+    <div *ngIf="university && !loading && !error">
+        <form (ngSubmit)="onSaveClick()">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input id="name" type="text" [(ngModel)]="editableUniversity.name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact:</label>
+                <input id="contact" type="text" [(ngModel)]="editableUniversity.contact" name="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" [(ngModel)]="editableUniversity.description" name="description" rows="5" required></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="save-button">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading university information...</p>
+    </div>
+    <div *ngIf="error && !loading" class="error-container">
+        <div class="error-message">
+            <h2>An error occurred</h2>
+            <p>{{ error }}</p>
+            <button class="retry-button" (click)="loadUniversityData()" type="button">Try again</button>
+        </div>
+    </div>
+</div>

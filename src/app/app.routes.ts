@@ -20,11 +20,13 @@ import { StudentOnYearTableComponent } from './pages/professor/student-on-year-t
 import { FacultiesComponent } from './pages/faculties/faculties.component';
 import { FacultyProgramsComponent } from './pages/faculty-programs/faculty-programs.component';
 import { ProgramCoursesComponent } from './pages/program-courses/program-courses.component';
+import { UserManagementComponent } from './pages/admin/user-management/user-management.component';
+import { StudyProgramManagementComponent } from './pages/admin/study-program-management/study-program-management.component';
+import { AdminUniversityComponent } from './pages/admin/admin-university/admin-university.component';
 
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  // { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'university', component: UniversityComponent },
   { path: 'faculty/:id', component: FacultyProgramsComponent },
@@ -43,5 +45,9 @@ export const routes: Routes = [
   { path: 'professor-term-topic/:id', component: ProfessorTermTopicComponent },
   { path: 'manage-courses/:courseId/details', component: CourseDetailsComponent },
   { path: 'search-students', component: StudentOnYearTableComponent },
-
+  { path: 'admin/users', component: UserManagementComponent }, 
+  { path: 'admin/study-programs', component: StudyProgramManagementComponent },
+  
+  // ✨ Dodata ruta za administraciju univerziteta
+  { path: 'admin/university', component: AdminUniversityComponent },
 ];
