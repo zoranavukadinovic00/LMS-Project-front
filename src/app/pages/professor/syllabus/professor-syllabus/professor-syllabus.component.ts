@@ -43,7 +43,7 @@ export class ProfessorSyllabusComponent implements OnInit {
   private loadList() {
     const token = localStorage.getItem('token');
     if (!token || !this.courseId) return;
-    this.syllabusService.getSyllabusByCourse(token, this.courseId).subscribe(list => {
+    this.syllabusService.getSyllabusByCourse(this.courseId).subscribe(list => {
       this.syllabuses = list ?? [];
     });
   }

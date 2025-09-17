@@ -18,10 +18,9 @@ export class SyllabusService {
     return { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) };
   }
 
-  getSyllabusByCourse(token: string, courseId: number): Observable<Syllabus[]> {
+  getSyllabusByCourse(courseId: number): Observable<Syllabus[]> {
     return this.http.get<Syllabus[]>(
-      `${this.apiUrl}/by_course/${courseId}`,
-      this.headers(token)
+      `${this.apiUrl}/by_course/${courseId}`
     );
   }
 

@@ -1,0 +1,50 @@
+<div class="page">
+  <div class="left">
+    <div class="header">
+      <h2 class="title">
+        Exam Periods <span *ngIf="courseName">— {{ courseName }}</span>
+      </h2>
+      <button class="create-btn" (click)="openCreate()">Create</button>
+    </div>
+
+    <div *ngIf="examPeriods && examPeriods.length > 0; else noExamPeriod">
+      <ul class="exam-period-list">
+        <li *ngFor="let examPeriod of examPeriods" class="exam-period-item">
+          <div class="row">
+            <div class="info">
+              <h3 class="ep-title">#{{ examPeriod.id }}</h3>
+              <p><strong>Start:</strong> {{ examPeriod.startDate | date:'dd.MM.yyyy HH:mm' }}</p>
+              <p><strong>End:</strong>   {{ examPeriod.endDate   | date:'dd.MM.yyyy HH:mm' }}</p>
+              <p *ngIf="examPeriod.courseId"><strong>Course ID:</strong> {{ examPeriod.courseId }}</p>
+            </div>
+
+            <div class="actions">
+              <button type="button" (click)="openUpdate(examPeriod)">Update</button>
+              <button type="button" class="danger" (click)="delete(examPeriod)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noExamPeriod>
+      <p>No exam periods found.</p>
+    </ng-template>
+  </div>
+
+  <div class="right" *ngIf="rightPanel !== 'none'">
+    <app-exam-period-create
+      *ngIf="rightPanel === 'create' && courseId"
+      [courseId]="courseId!"
+      (created)="onCreated($event)"
+      (cancel)="closePanel()"
+    ></app-exam-period-create>
+
+    <app-exam-period-update
+      *ngIf="rightPanel === 'update' && editing"
+      [item]="editing!"
+      (updated)="onUpdated($event)"
+      (cancel)="closePanel()"
+    ></app-exam-period-update>
+  </div>
+</div>
