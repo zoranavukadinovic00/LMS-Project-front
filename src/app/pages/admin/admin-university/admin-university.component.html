@@ -1,36 +1,56 @@
-<div class="page-container">
-    <h2>University Administration</h2>
+<div class="main-container">
+  <h2>Administracija univerziteta</h2>
 
-    <div *ngIf="university && !loading && !error">
-        <form (ngSubmit)="onSaveClick()">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input id="name" type="text" [(ngModel)]="editableUniversity.name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="contact">Contact:</label>
-                <input id="contact" type="text" [(ngModel)]="editableUniversity.contact" name="contact" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" [(ngModel)]="editableUniversity.description" name="description" rows="5" required></textarea>
-            </div>
-            
-            <div class="form-actions">
-                <button type="submit" class="save-button">Save Changes</button>
-            </div>
-        </form>
-    </div>
+  <div *ngIf="loading" class="loading-indicator">Učitavanje...</div>
 
-    <div *ngIf="loading" class="loading">
-        <div class="spinner"></div>
-        <p>Loading university information...</p>
-    </div>
-    <div *ngIf="error && !loading" class="error-container">
-        <div class="error-message">
-            <h2>An error occurred</h2>
-            <p>{{ error }}</p>
-            <button class="retry-button" (click)="loadUniversityData()" type="button">Try again</button>
-        </div>
-    </div>
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="university">
+    <form (ngSubmit)="onSaveClick()" #universityForm="ngForm">
+      <div class="form-group">
+        <label for="name">Naziv univerziteta:</label>
+        <input id="name" type="text" [(ngModel)]="editableUniversity.name" name="name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="contact">Kontakt:</label>
+        <input id="contact" type="text" [(ngModel)]="editableUniversity.contact" name="contact">
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Opis:</label>
+        <textarea id="description" [(ngModel)]="editableUniversity.description" name="description"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfEstablishment">Datum osnivanja:</label>
+        <input 
+          id="dateOfEstablishment" 
+          type="date" 
+          [ngModel]="editableUniversity.dateOfEstablishment | date:'yyyy-MM-dd'" 
+          (change)="onDateChange($event)" 
+          name="dateOfEstablishment"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="rectorName">Ime rektora:</label>
+        <input id="rectorName" type="text" [(ngModel)]="editableUniversity.rectorName" name="rectorName" disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="rectorEmail">Email rektora:</label>
+        <input id="rectorEmail" type="text" [(ngModel)]="editableUniversity.rectorEmail" name="rectorEmail" disabled>
+      </div>
+
+      <div class="form-group">
+        <label>Adresa:</label>
+        <p class="readonly-value">{{ editableUniversity.address }}</p>
+      </div>
+      
+      <button type="submit" [disabled]="loading || universityForm.invalid">Sačuvaj izmene</button>
+    </form>
+  </div>
 </div>

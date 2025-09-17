@@ -22,6 +22,8 @@ export class StudyProgramManagementComponent implements OnInit {
   users: User[] = [];
   selectedProgram: StudyProgram | null = null;
   errorMessage: string | null = null;
+  selectedFacultyId: number | null = null;
+  selectedManagerId: number | null = null;
 
   constructor(
     private studyProgramService: StudyProgramService,
@@ -95,10 +97,14 @@ export class StudyProgramManagementComponent implements OnInit {
       managerSurname: '',
       managerEmail: ''
     };
+    this.selectedFacultyId = null;
+    this.selectedManagerId = null;
   }
 
   editProgram(program: StudyProgram): void {
     this.selectedProgram = { ...program };
+    this.selectedFacultyId = program.facultyId;
+    this.selectedManagerId = program.managerId;
   }
 
   saveProgram(): void {
@@ -109,8 +115,20 @@ export class StudyProgramManagementComponent implements OnInit {
         console.error('Authentication token not found.');
         return;
       }
+      
+      if (this.selectedFacultyId) {
+        this.selectedProgram.facultyId = this.selectedFacultyId;
+      }
+      if (this.selectedManagerId) {
+        this.selectedProgram.managerId = this.selectedManagerId;
+      }
 
       if (this.selectedProgram.id === 0) {
+        if (!this.selectedProgram.facultyId || !this.selectedProgram.managerId) {
+          this.errorMessage = 'Please select a faculty and a manager.';
+          return;
+        }
+
         this.studyProgramService.createStudyProgram(this.selectedProgram, token).subscribe({
           next: () => {
             this.loadData();

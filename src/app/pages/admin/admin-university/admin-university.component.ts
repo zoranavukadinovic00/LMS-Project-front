@@ -1,9 +1,8 @@
-// src/app/pages/admin-university/admin-university.component.ts
+// src/app/pages/admin/admin-university/admin-university.component.ts
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { University } from '../../../model/university.model';
@@ -38,7 +37,7 @@ export class AdminUniversityComponent implements OnInit {
       .subscribe({
         next: (university) => {
           this.university = university;
-          this.editableUniversity = { ...university }; // Kopiramo podatke za formu
+          this.editableUniversity = { ...university }; 
         },
         error: (error) => {
           this.handleError('Failed to load university data.');
@@ -48,7 +47,10 @@ export class AdminUniversityComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    if (!this.editableUniversity.id) return;
+    if (!this.editableUniversity.id) {
+      this.handleError('University ID is missing.');
+      return;
+    }
     this.loading = true;
     this.error = null;
 
@@ -58,15 +60,25 @@ export class AdminUniversityComponent implements OnInit {
         next: (updatedUniversity) => {
           this.university = updatedUniversity;
           this.editableUniversity = { ...updatedUniversity };
-          // Opciono: Prikazati poruku o uspehu
+          console.log('University updated successfully!'); 
         },
         error: (error) => {
-          this.handleError('Failed to update university data.');
+          this.handleError('Failed to update university data. ' + error.message);
           console.error('Update error:', error);
         }
       });
   }
 
+  // ✨ NEW FUNCTION: Correctly handles date changes
+  onDateChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.value) {
+      this.editableUniversity.dateOfEstablishment = new Date(target.value);
+    } else {
+      this.editableUniversity.dateOfEstablishment = null;
+    }
+  }
+  
   private handleError(message: string): void {
     this.error = message;
     this.loading = false;

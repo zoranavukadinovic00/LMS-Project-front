@@ -23,6 +23,7 @@ import { ProgramCoursesComponent } from './pages/program-courses/program-courses
 import { UserManagementComponent } from './pages/admin/user-management/user-management.component';
 import { StudyProgramManagementComponent } from './pages/admin/study-program-management/study-program-management.component';
 import { AdminUniversityComponent } from './pages/admin/admin-university/admin-university.component';
+import { AddUserComponent } from './pages/admin/add-user/add-user.component';
 
 
 export const routes: Routes = [
@@ -47,7 +48,7 @@ export const routes: Routes = [
   { path: 'search-students', component: StudentOnYearTableComponent },
   { path: 'admin/users', component: UserManagementComponent }, 
   { path: 'admin/study-programs', component: StudyProgramManagementComponent },
-  
-  // ✨ Dodata ruta za administraciju univerziteta
   { path: 'admin/university', component: AdminUniversityComponent },
+  { path: 'admin/add-user', component: AddUserComponent }, // ✨ Nova ruta
+
 ];

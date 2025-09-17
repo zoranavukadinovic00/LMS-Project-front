@@ -1,7 +1,9 @@
+// src/app/services/university.service.ts
+
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, retry, map } from 'rxjs/operators';
 import { University } from '../model/university.model';
 
 @Injectable({
@@ -12,6 +14,17 @@ export class UniversityService {
 
   constructor(private http: HttpClient) {}
 
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Authentication token not found.');
+    }
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
   getById(id: string): Observable<University> {
     if (!id || id.trim() === '') {
       return throwError(() => new Error('University ID is required'));
@@ -19,6 +32,12 @@ export class UniversityService {
 
     return this.http.get<University>(`${this.apiUrl}/${id}`).pipe(
       retry(2),
+      map((university: University) => {
+        if (university.dateOfEstablishment) {
+          university.dateOfEstablishment = new Date(university.dateOfEstablishment);
+        }
+        return university;
+      }),
       catchError(this.handleError)
     );
   }
@@ -30,9 +49,24 @@ export class UniversityService {
     );
   }
 
-  // Dodat metod za ažuriranje univerziteta
   updateUniversity(university: University): Observable<University> {
-    return this.http.put<University>(`${this.apiUrl}/${university.id}`, university).pipe(
+    const headers = this.getAuthHeaders();
+    
+    // ✨ ISPRAVLJENO: Proverava se da li je dateOfEstablishment validan pre konverzije
+    const dateOfEstablishment = university.dateOfEstablishment instanceof Date 
+        ? university.dateOfEstablishment.toISOString().substring(0, 10)
+        : null;
+
+    const universityToSend = {
+      ...university,
+      dateOfEstablishment: dateOfEstablishment // ✨ Koristimo novu validiranu vrednost
+    };
+
+    return this.http.put<University>(
+      `${this.apiUrl}/${university.id}`, 
+      universityToSend, 
+      { headers: headers }
+    ).pipe(
       retry(2),
       catchError(this.handleError)
     );
@@ -42,13 +76,14 @@ export class UniversityService {
     let errorMessage = 'An unexpected error occurred';
 
     if (error.error instanceof ErrorEvent) {
-    
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      
       switch (error.status) {
         case 400:
           errorMessage = 'Bad request - please check your input';
+          break;
+        case 403:
+          errorMessage = 'You do not have permission to perform this action.';
           break;
         case 404:
           errorMessage = 'University not found';
