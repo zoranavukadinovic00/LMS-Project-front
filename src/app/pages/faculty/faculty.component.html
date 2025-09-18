@@ -1,10 +1,8 @@
 <div class="page-container">
-  <!-- Display when data is loaded -->
   <div *ngIf="faculty && !loading && !error">
     <h1>{{ faculty.name }}</h1>
 
     <div class="page-content">
-      <!-- Basic information -->
       <div class="faculty-info">
         <div class="info-grid">
           <div class="info-item">
@@ -54,7 +52,6 @@
         </div>
       </div>
 
-      <!-- Detailed address information -->
       <div *ngIf="faculty.addressDetails" class="details-section">
         <h2>Detailed address information</h2>
         <div class="detail-card">
@@ -79,7 +76,6 @@
         </div>
       </div>
 
-      <!-- Detailed dean information -->
       <div *ngIf="faculty.deanDetails" class="details-section">
         <h2>Dean information</h2>
         <div class="detail-card">
@@ -101,7 +97,6 @@
         </div>
       </div>
 
-      <!-- Faculty description -->
       <div class="details-section">
         <h2>Faculty description</h2>
         <div class="description">
@@ -114,13 +109,11 @@
     </div>
   </div>
 
-  <!-- Loading state -->
   <div *ngIf="loading" class="loading">
     <div class="spinner"></div>
     <p>Loading faculty information...</p>
   </div>
 
-  <!-- Error state -->
   <div *ngIf="error && !loading" class="error-container">
     <div class="error-message">
       <h2>An error occurred</h2>

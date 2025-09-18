@@ -1,5 +1,3 @@
-// src/app/pages/admin/admin-university/admin-university.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -69,7 +67,6 @@ export class AdminUniversityComponent implements OnInit {
       });
   }
 
-  // ✨ NEW FUNCTION: Correctly handles date changes
   onDateChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target.value) {

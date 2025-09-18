@@ -52,14 +52,13 @@ export class UniversityService {
   updateUniversity(university: University): Observable<University> {
     const headers = this.getAuthHeaders();
     
-    // ✨ ISPRAVLJENO: Proverava se da li je dateOfEstablishment validan pre konverzije
     const dateOfEstablishment = university.dateOfEstablishment instanceof Date 
         ? university.dateOfEstablishment.toISOString().substring(0, 10)
         : null;
 
     const universityToSend = {
       ...university,
-      dateOfEstablishment: dateOfEstablishment // ✨ Koristimo novu validiranu vrednost
+      dateOfEstablishment: dateOfEstablishment 
     };
 
     return this.http.put<University>(

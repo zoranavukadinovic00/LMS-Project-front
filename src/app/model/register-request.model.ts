@@ -1,8 +1,5 @@
-// src/app/model/register-request.model.ts
-
 import { UserType } from './user.model';
 
-// ✨ ISPRAVKA: Dodat je 'export' ispred 'interface'
 export interface RegisterRequest {
   id?: number;
   username: string;

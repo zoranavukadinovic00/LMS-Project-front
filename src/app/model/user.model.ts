@@ -1,6 +1,3 @@
-// src/app/model/user.model.ts
-
-// ✨ ISPRAVKA: Dodat je exportovan enum
 export enum UserType {
   STUDENT = 'STUDENT',
   PROFESSOR = 'PROFESSOR',
@@ -17,5 +14,5 @@ export interface User {
   surname: string;
   biography?: string;
   type: UserType;
-  // Dodajte ostale atribute ako su potrebni
+  role?: string; 
 }

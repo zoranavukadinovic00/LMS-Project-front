@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { User } from '../../../model/user.model';
+
+import { User, UserType } from '../../../model/user.model';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -17,6 +17,8 @@ export class UserManagementComponent implements OnInit {
   users: User[] = [];
   errorMessage: string | null = null;
   selectedUser: User | null = null;
+  
+  userTypes = Object.values(UserType);
 
   constructor(private userService: UserService) {}
 
@@ -56,7 +58,7 @@ export class UserManagementComponent implements OnInit {
               this.users[index] = updatedUser;
             }
             this.selectedUser = null;
-            this.loadUsers(); // Ponovno učitavanje liste korisnika
+            this.loadUsers();
           },
           error: (error) => {
             this.errorMessage = 'Failed to update user. ' + error.message;
@@ -71,7 +73,11 @@ export class UserManagementComponent implements OnInit {
     this.selectedUser = null;
   }
 
-  deleteUser(id: number): void {
+  deleteUser(id: number | undefined): void {
+    if (id === undefined) {
+      return;
+    }
+    
     const token = localStorage.getItem('token');
     if (token && confirm('Are you sure you want to delete this user?')) {
       this.userService.deleteUser(token, id).subscribe({

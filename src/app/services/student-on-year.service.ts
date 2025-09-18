@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StudentOnYear } from '../model/student-on-year.model';
+import { EnrollmentRequest } from '../model/enrollment-request.model';
 
 export interface PageResponse<T> {
   content: T[];
   totalElements: number;
   totalPages: number;
-  number: number;   
-  size: number;     
+  number: number;
+  size: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentOnYearService {
-  private apiUrl = 'http://localhost:8080/api/students';
+  private apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
@@ -49,9 +50,18 @@ export class StudentOnYearService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.get<PageResponse<StudentOnYear>>(`${this.apiUrl}/search`, {
+    return this.http.get<PageResponse<StudentOnYear>>(`${this.apiUrl}/students/search`, {
       headers,
       params,
     });
+  }
+
+
+  enrollStudent(request: EnrollmentRequest, token: string): Observable<StudentOnYear[]> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<StudentOnYear[]>(`${this.apiUrl}/staff/enroll-student`, request, { headers });
   }
 }

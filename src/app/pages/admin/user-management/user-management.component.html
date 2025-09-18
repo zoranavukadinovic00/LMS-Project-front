@@ -33,7 +33,9 @@
       </label>
       <label>
         Role:
-        <input type="text" [(ngModel)]="selectedUser.role" name="role" required>
+        <select [(ngModel)]="selectedUser.type" name="type" required>
+          <option *ngFor="let type of userTypes" [value]="type">{{ type }}</option>
+        </select>
       </label>
       <button type="submit">Save</button>
       <button type="button" (click)="cancelEdit()">Cancel</button>
@@ -62,7 +64,7 @@
           <td>{{ user.name }}</td>
           <td>{{ user.surname }}</td>
           <td>{{ user.jmbg }}</td>
-          <td>{{ user.role }}</td>
+          <td>{{ user.type }}</td>
           <td>
             <button class="edit-btn" (click)="editUser(user)">Edit</button>
             <button class="delete-btn" (click)="deleteUser(user.id)">Delete</button>

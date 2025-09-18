@@ -1,5 +1,3 @@
-// src/app/model/university.model.ts
-
 export interface AddressDetails {
   street: string;
   number: string;
@@ -19,7 +17,7 @@ export interface University {
   address: string;
   contact: string;
   description: string;
-  dateOfEstablishment: Date | null; // ✨ This is the key change
+  dateOfEstablishment: Date | null; 
   rectorName: string; 
   rectorEmail?: string; 
   

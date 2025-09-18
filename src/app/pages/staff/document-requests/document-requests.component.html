@@ -1,0 +1,37 @@
+<div class="container">
+    <h2>Zahtevi za dokumenta</h2>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+    <div *ngIf="pendingRequests.length > 0; else noRequests">
+      <h3>Zahtevi na čekanju</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID Zahteva</th>
+            <th>Student</th>
+            <th>Tip dokumenta</th>
+            <th>Svrha</th>
+            <th>Datum zahteva</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let req of pendingRequests">
+            <td>{{ req.id }}</td>
+            <td>{{ req.studentFullName }} ({{ req.studentUsername }})</td>
+            <td>{{ req.documentType | lowercase | titlecase }}</td>
+            <td>{{ req.purpose }}</td>
+            <td>{{ req.requestDate | date:'short' }}</td>
+            <td>
+              <button class="btn approve-btn" (click)="approveRequest(req.id)">Odobri</button>
+              <button class="btn reject-btn" (click)="rejectRequest(req.id)">Odbij</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noRequests>
+      <p>Nema zahteva na čekanju.</p>
+    </ng-template>
+</div>

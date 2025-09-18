@@ -13,7 +13,6 @@ import { RegisterRequest } from '../model/register-request.model';
 export class UserService {
   private apiUrl = 'http://localhost:8080/api/users';
   private adminApiUrl = 'http://localhost:8080/api/admin/users';
-  // ✨ Dodata putanja za autentifikacioni API
   private authApiUrl = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) {}
@@ -22,7 +21,6 @@ export class UserService {
     return { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) };
   }
 
-  // ✨ Novi metod za kreiranje korisnika
   createUser(token: string, userData: RegisterRequest): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -44,7 +42,6 @@ export class UserService {
     return this.http.put<void>(`${this.apiUrl}/${user.id}`, user, this.headers(token));
   }
 
-  // Metode za administraciju
   getAllUsers(token: string): Observable<User[]> {
     return this.http.get<User[]>(this.adminApiUrl, this.headers(token));
   }

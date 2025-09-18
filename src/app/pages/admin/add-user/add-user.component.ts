@@ -1,12 +1,10 @@
-// src/app/pages/admin/add-user/add-user.component.ts
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
 import { RegisterRequest } from '../../../model/register-request.model';
-import { UserType } from '../../../model/user.model'; // Uverite se da je putanja ispravna
+import { UserType } from '../../../model/user.model'; 
 
 @Component({
   selector: 'app-add-user',
@@ -22,7 +20,7 @@ export class AddUserComponent {
     email: '',
     name: '',
     surname: '',
-    biography: '', // ✨ Set default value to an empty string
+    biography: '', 
     type: UserType.PROFESSOR
   };
   userTypes = Object.values(UserType);
@@ -37,7 +35,6 @@ export class AddUserComponent {
     this.successMessage = null;
     this.errorMessage = null;
 
-    // ✨ ISPRAVKA: Dobavljanje tokena iz localStorage-a
     const token = localStorage.getItem('token');
     if (!token) {
       this.errorMessage = 'Greška autentifikacije: Token nije pronađen.';
@@ -45,7 +42,6 @@ export class AddUserComponent {
       return;
     }
 
-    // ✨ ISPRAVKA: Prosleđivanje tokena i userData
     this.userService.createUser(token, this.newUser)
       .pipe(finalize(() => this.loading = false))
       .subscribe({
@@ -67,7 +63,7 @@ export class AddUserComponent {
       email: '',
       name: '',
       surname: '',
-      biography: '', // ✨ Set to empty string here too
+      biography: '', 
       type: UserType.PROFESSOR
     };
   }

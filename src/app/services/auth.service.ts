@@ -20,7 +20,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('role'); // ✨ Dodato: obrišite i ulogu
+    localStorage.removeItem('role'); 
   }
 
   saveTokenAndRole(token: string, role: string) {
@@ -32,7 +32,6 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  // ✨ Dodata metoda za dobijanje uloge korisnika
   getLoggedInUserRole(): string | null {
     return localStorage.getItem('role');
   }

@@ -1,0 +1,54 @@
+<div class="container">
+    <h2>Dokumenta i potvrde</h2>
+    
+    <div class="request-form">
+      <h3>Podnesi novi zahtev</h3>
+      <form (ngSubmit)="submitRequest()">
+        <div class="form-group">
+          <label for="documentType">Vrsta dokumenta:</label>
+          <select id="documentType" name="documentType" [(ngModel)]="newRequest.documentType">
+            <option value="STUDENT_STATUS">Potvrda o statusu studenta</option>
+            <option value="TRANSCRIPT">Uverenje o polozenim ispitima</option>
+            <option value="VISA_CONFIRMATION">Potvrda za vizu</option>
+            <option value="OTHER">Ostalo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="purpose">Svrha:</label>
+          <input type="text" id="purpose" name="purpose" [(ngModel)]="newRequest.purpose" required>
+        </div>
+        <button type="submit" class="btn">Posalji zahtev</button>
+      </form>
+      <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </div>
+
+    <div class="request-history">
+      <h3>Moji zahtevi</h3>
+      <table *ngIf="documentRequests.length > 0">
+        <thead>
+          <tr>
+            <th>Tip dokumenta</th>
+            <th>Svrha</th>
+            <th>Status</th>
+            <th>Datum zahteva</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let req of documentRequests">
+            <td>{{ req.documentType | lowercase | titlecase }}</td>
+            <td>{{ req.purpose }}</td>
+            <td>{{ req.status }}</td>
+            <td>{{ req.requestDate | date:'short' }}</td>
+            <td>
+              <a *ngIf="req.status === 'APPROVED'" [href]="req.downloadLink" target="_blank">Preuzmi</a>
+              <span *ngIf="req.status === 'PENDING'">Na cekanju</span>
+              <span *ngIf="req.status === 'REJECTED'">Odbijen</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="documentRequests.length === 0">Nema podnetih zahteva za dokumenta.</p>
+    </div>
+</div>

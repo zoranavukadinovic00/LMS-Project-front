@@ -8,14 +8,15 @@ import { StudyProgram } from '../model/study-program.model';
   providedIn: 'root',
 })
 export class StudyProgramService {
-  private apiUrl = 'http://localhost:8080/api/study-programs'; // ISPRAVLJENO: Koristite crticu
+  private apiUrl = 'http://localhost:8080/api/study-programs';
   private adminApiUrl = 'http://localhost:8080/api/admin/study-programs';
+  private staffApiUrl = 'http://localhost:8080/api/staff/study-programs';
 
   constructor(private http: HttpClient) {}
 
   private getAuthHeaders(token: string): HttpHeaders {
     if (!token) {
-        throw new Error('Authentication token not found.');
+      throw new Error('Authentication token not found.');
     }
     return new HttpHeaders({
       'Content-Type': 'application/json',
@@ -23,7 +24,6 @@ export class StudyProgramService {
     });
   }
 
-  // JAVNI METODI
   getById(id: number | string): Observable<StudyProgram | null> {
     return this.http.get<StudyProgram>(`${this.apiUrl}/${id}`);
   }
@@ -32,8 +32,16 @@ export class StudyProgramService {
     return this.http.get<StudyProgram[]>(`${this.apiUrl}/faculty/${facultyId}`);
   }
 
-  // ADMIN METODI
-  // Metoda sada prima 'token' kao parametar
+  getAllStudyProgramsAsStaff(token: string): Observable<StudyProgram[]> {
+    const headers = this.getAuthHeaders(token);
+    return this.http.get<StudyProgram[]>(this.staffApiUrl, { headers: headers }).pipe(
+      catchError(error => {
+        console.error('Failed to get study programs for staff:', error);
+        return throwError(() => new Error('Failed to load study programs. Please check your permissions.'));
+      })
+    );
+  }
+
   getAllStudyPrograms(token: string): Observable<StudyProgram[]> {
     const headers = this.getAuthHeaders(token);
     return this.http.get<StudyProgram[]>(this.adminApiUrl, { headers: headers }).pipe(
@@ -44,7 +52,6 @@ export class StudyProgramService {
     );
   }
 
-  // Ostale admin metode su takođe ažurirane da primaju token
   createStudyProgram(program: StudyProgram, token: string): Observable<StudyProgram> {
     const headers = this.getAuthHeaders(token);
     return this.http.post<StudyProgram>(this.adminApiUrl, program, { headers: headers }).pipe(

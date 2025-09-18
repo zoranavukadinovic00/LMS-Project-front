@@ -18,14 +18,12 @@ import { User } from '../../model/user.model';
   styleUrls: ['./update-profile.component.css']
 })
 export class UpdateProfileComponent implements OnInit {
-  profileForm: FormGroup; // ✨ Nova property
-  loading = true; // Uvek počinje sa true jer se podaci učitavaju
+  profileForm: FormGroup; 
+  loading = true;
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  // ✨ UVEZITE FormBuilder
   constructor(private fb: FormBuilder, private userService: UserService) {
-    // ✨ INICIJALIZACIJA FORME SA VALIDATORIMA
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -47,7 +45,6 @@ export class UpdateProfileComponent implements OnInit {
         .pipe(finalize(() => this.loading = false))
         .subscribe({
           next: (user) => {
-            // ✨ POPUNJAVANJE FORME DOBIJENIM PODACIMA
             this.profileForm.patchValue({
               name: user.name,
               surname: user.surname,
@@ -68,7 +65,6 @@ export class UpdateProfileComponent implements OnInit {
     }
   }
 
-  // ✨ METODA ZA SLANJE FORME
   onSubmit(): void {
     if (this.profileForm.invalid) {
       this.errorMessage = 'Please fix the validation errors in the form.';
@@ -83,19 +79,15 @@ export class UpdateProfileComponent implements OnInit {
     const userFromForm = this.profileForm.value;
 
     if (token) {
-      // Iz `User` modela koji učitavate na početku, uzimate ID.
-      // Svi ostali podaci su iz forme.
-      const userId = this.profileForm.get('id')?.value; // Pretpostavljam da imate i id u formi. Ako ne, koristite id iz user objekta sa početka.
+ 
+      const userId = this.profileForm.get('id')?.value; 
 
-      // Da biste izbegli grešku sa id-jem, najbolje je uzeti originalni user objekat i zameniti mu vrednosti
-      // sa vrednostima iz forme pre slanja.
       this.userService.getUserByToken(token)
         .subscribe({
           next: (originalUser) => {
-            // Kreirajte novi objekat sa ažuriranim podacima i originalnim ID-jem
             const updatedUser: User = {
-              ...originalUser, // Kopirajte originalne podatke
-              ...this.profileForm.value // Prepišite polja iz forme
+              ...originalUser,
+              ...this.profileForm.value 
             };
 
             this.userService.update(token, updatedUser)

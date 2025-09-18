@@ -5,13 +5,13 @@ import { UniversityService } from '../../services/university.service';
 import { University } from '../../model/university.model';
 import { Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { FormsModule } from '@angular/forms'; // Potrebno za ngModel
-import { AuthService } from '../../services/auth.service'; // Pretpostavka da postoji
+import { FormsModule } from '@angular/forms'; 
+import { AuthService } from '../../services/auth.service'; 
 
 @Component({
   selector: 'app-university',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule], // Dodajte FormsModule
+  imports: [CommonModule, RouterModule, FormsModule], 
   templateUrl: './university.component.html',
   styleUrls: ['./university.component.css'],
 })
@@ -92,7 +92,6 @@ export class UniversityComponent implements OnInit, OnDestroy {
               next: (updatedUniversity) => {
                   this.university = updatedUniversity;
                   this.isEditing = false;
-                  // Opciono: prikažite poruku o uspešnom ažuriranju
               },
               error: (error) => {
                   this.handleError('Failed to update university data.');

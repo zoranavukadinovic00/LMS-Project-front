@@ -12,7 +12,6 @@ export class ExamService {
 
   constructor(private http: HttpClient) {}
 
-  // --- MOCK DATA ---
   private mockPeriods: ExamPeriod[] = [
     { id: 1, name: 'April 2025' },
     { id: 2, name: 'July 2025' },
