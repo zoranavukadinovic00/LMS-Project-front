@@ -6,12 +6,12 @@ import { Course } from '../model/course.model';
 
 @Injectable({ providedIn: 'root' })
 export class FacultyProgramsService {
-  private base = 'http://localhost:8080/api/study_programs';
+  private base = 'http://localhost:8080/api/study-programs';
 
   constructor(private http: HttpClient) {}
 
   listByFaculty(facultyId: number | string): Observable<StudyProgram[]> {
-    return this.http.get<StudyProgram[]>(`${this.base}/by_faculty/${facultyId}`);
+    return this.http.get<StudyProgram[]>(`${this.base}/faculty/${facultyId}`);
   }
   
 }

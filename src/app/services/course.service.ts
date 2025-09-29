@@ -20,6 +20,13 @@ export class CourseService {
      return this.http.get<Course>(`${this.apiUrl}/${id}`);
    }
 
+   getAll(token: string): Observable<Course[]> {
+    const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+     return this.http.get<Course[]>(`${this.apiUrl}`, { headers });
+   }
+
    getByStudyProgramId(studyProgramId: number | string): Observable<Course[]> {
      return this.http.get<Course[]>(`${this.apiUrl}/forStudyProgram/${studyProgramId}`);
    }

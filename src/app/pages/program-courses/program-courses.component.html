@@ -1,15 +1,69 @@
-<div *ngIf="loading">Loading courses...</div>
+<div *ngIf="loading">Loading...</div>
 <div *ngIf="error" class="error">{{ error }}</div>
 
-<section class="page" *ngIf="!loading && !error">
-  <h1 class="title">{{ programName || 'Study program' }} — Courses</h1>
+<section class="page" *ngIf="!loading && !error && studyProgram">
+  <h1 class="title">{{ studyProgram.name }}</h1>
+  
+  <!-- Study Program Details Section -->
+  <div class="program-details">
+    <div class="info-grid">
+      <p><strong>Faculty:</strong> {{ studyProgram.facultyName }}</p>
+      <p><strong>Manager:</strong> {{ studyProgram.managerName }} {{ studyProgram.managerSurname }}</p>
+      <p><strong>Manager Email:</strong> 
+        <a href="mailto:{{ studyProgram.managerEmail }}">{{ studyProgram.managerEmail }}</a>
+      </p>
+    </div>
+    
+    <h2>Description</h2>
+    <p class="description">{{ studyProgram.description }}</p>
+  </div>
 
+  <!-- Courses Section -->
+  <h2>Courses in this program</h2>
+  
   <ng-container *ngIf="courses?.length; else noCourses">
     <ul class="course-list">
       <li *ngFor="let c of courses">
-        <div class="course-name">{{ c.name }}</div>
-        <div class="course-meta" *ngIf="c.espbPoints">ECTS: {{ c.espbPoints }}</div>
-        
+        <div class="course-wrapper">
+          <div class="course-info">
+            <div class="course-name">{{ c.name }}</div>
+            <div class="course-details">
+              <div class="course-meta" *ngIf="c.espbPoints">ECTS: {{ c.espbPoints }}</div>
+              <div class="course-meta" *ngIf="c.mandatory !== undefined">
+                {{ c.mandatory ? 'Mandatory' : 'Optional' }}
+              </div>
+            </div>
+            <div class="course-schedule" *ngIf="c.numberOfLectures || c.numberOfExercises">
+              <span *ngIf="c.numberOfLectures">Lectures: {{ c.numberOfLectures }}</span>
+              <span *ngIf="c.numberOfExercises" [class.with-separator]="c.numberOfLectures">Exercises: {{ c.numberOfExercises }}</span>
+            </div>
+            <div class="teaching-materials" *ngIf="c.teachingMaterials">
+              <strong>Materials:</strong> {{ c.teachingMaterials }}
+            </div>
+          </div>
+          
+          <button class="syllabus-toggle-btn" (click)="toggleCourse(c.id)">
+            {{ expandedCourseId === c.id ? 'Hide Syllabuses' : 'View Syllabuses' }}
+          </button>
+          
+          <!-- Syllabus section for expanded course -->
+          <div class="syllabus-section" *ngIf="expandedCourseId === c.id">
+            <div *ngIf="syllabusLoading" class="syllabus-loading">Loading syllabuses...</div>
+            
+            <div *ngIf="!syllabusLoading && syllabuses.length > 0" class="syllabus-list">
+              <h4>Syllabuses:</h4>
+              <ul>
+                <li *ngFor="let syllabus of syllabuses" class="syllabus-item">
+                  <p>{{ syllabus.description }}</p>
+                </li>
+              </ul>
+            </div>
+            
+            <div *ngIf="!syllabusLoading && syllabuses.length === 0" class="no-syllabuses">
+              <p>No syllabuses available for this course.</p>
+            </div>
+          </div>
+        </div>
       </li>
     </ul>
   </ng-container>
