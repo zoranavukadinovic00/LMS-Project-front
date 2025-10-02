@@ -20,7 +20,8 @@
       <div class="form-group">
         <label for="faculty">Faculty:</label>
         <select id="faculty" [(ngModel)]="selectedProgram.facultyId" name="facultyId" required>
-          <option [ngValue]="0" disabled>Select Faculty</option>
+          <!-- Promena: Korišćenje [ngValue]="null" za bolju kompatibilnost sa neizabranim stanjem -->
+          <option [ngValue]="null" disabled>Select Faculty</option> 
           <option *ngFor="let faculty of faculties" [ngValue]="faculty.id">{{ faculty.name }}</option>
         </select>
       </div>
@@ -28,7 +29,8 @@
       <div class="form-group">
         <label for="manager">Manager:</label>
         <select id="manager" [(ngModel)]="selectedProgram.managerId" name="managerId" required>
-          <option [ngValue]="0" disabled>Select Manager</option>
+          <!-- Promena: Korišćenje [ngValue]="null" za bolju kompatibilnost sa neizabranim stanjem -->
+          <option [ngValue]="null" disabled>Select Manager</option>
           <option *ngFor="let user of users" [ngValue]="user.id">{{ user.name }} {{ user.surname }}</option>
         </select>
       </div>

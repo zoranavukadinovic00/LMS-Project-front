@@ -26,7 +26,6 @@ import { UserManagementComponent } from './pages/admin/user-management/user-mana
 import { StudyProgramManagementComponent } from './pages/admin/study-program-management/study-program-management.component';
 import { AdminUniversityComponent } from './pages/admin/admin-university/admin-university.component';
 import { AddUserComponent } from './pages/admin/add-user/add-user.component';
-import { StaffDashboardComponent } from './pages/staff/staff-dashboard/staff-dashboard.component';
 import { EnrollStudentComponent } from './pages/staff/enroll-student/enroll-student.component';
 import { DocumentRequestsComponent } from './pages/student/document-requests/document-requests.component';
 import { StaffDocumentRequestsComponent } from './pages/staff/document-requests/document-requests.component';
@@ -55,7 +54,6 @@ export const routes: Routes = [
   { path: 'admin/study-programs', component: StudyProgramManagementComponent },
   { path: 'admin/university', component: AdminUniversityComponent },
   { path: 'admin/add-user', component: AddUserComponent },
-  { path: 'staff-dashboard', component: StaffDashboardComponent },
   { path: 'staff/enroll-student', component: EnrollStudentComponent }, 
   { path: 'student/document-requests', component: DocumentRequestsComponent },
   { path: 'staff/document-requests', component: StaffDocumentRequestsComponent }, 

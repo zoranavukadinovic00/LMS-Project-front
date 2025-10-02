@@ -35,7 +35,14 @@ export class AdminUniversityComponent implements OnInit {
       .subscribe({
         next: (university) => {
           this.university = university;
+          // Pravi se plitka kopija univerziteta
           this.editableUniversity = { ...university }; 
+          
+          // KRITIČNA ISPRAVKA: Proveravamo da li addressDetails postoji.
+          // Ako ne postoji, kreiramo ga, čime sprečavamo "Cannot read properties of undefined" u HTML-u.
+          if (!this.editableUniversity.addressDetails) {
+            this.editableUniversity.addressDetails = { street: '', number: '', city: '', country: '' }; 
+          }
         },
         error: (error) => {
           this.handleError('Failed to load university data.');
@@ -52,6 +59,7 @@ export class AdminUniversityComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
+    // Slanje kompletnog objekta (uključujući read-only polja)
     this.universityService.updateUniversity(this.editableUniversity)
       .pipe(finalize(() => this.loading = false))
       .subscribe({

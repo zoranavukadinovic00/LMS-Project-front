@@ -22,8 +22,6 @@ export class StudyProgramManagementComponent implements OnInit {
   users: User[] = [];
   selectedProgram: StudyProgram | null = null;
   errorMessage: string | null = null;
-  selectedFacultyId: number | null = null;
-  selectedManagerId: number | null = null;
 
   constructor(
     private studyProgramService: StudyProgramService,
@@ -76,7 +74,8 @@ export class StudyProgramManagementComponent implements OnInit {
     if (token) {
       this.userService.getAllUsers(token).subscribe({
         next: (data) => {
-          this.users = data;
+          // Filtrirajte korisnike na one koji mogu biti menadžeri ako je potrebno
+          this.users = data; 
         },
         error: (error) => {
           console.error('Failed to load users:', error);
@@ -89,22 +88,19 @@ export class StudyProgramManagementComponent implements OnInit {
     this.selectedProgram = {
       id: 0,
       name: '',
-      facultyId: 0,
+      facultyId: null as any,
       facultyName: '',
       description: '',
-      managerId: 0,
+      managerId: null as any,
       managerName: '',
       managerSurname: '',
       managerEmail: ''
     };
-    this.selectedFacultyId = null;
-    this.selectedManagerId = null;
   }
 
   editProgram(program: StudyProgram): void {
+    // Kreiranje plitke kopije
     this.selectedProgram = { ...program };
-    this.selectedFacultyId = program.facultyId;
-    this.selectedManagerId = program.managerId;
   }
 
   saveProgram(): void {
@@ -116,37 +112,63 @@ export class StudyProgramManagementComponent implements OnInit {
         return;
       }
       
-      if (this.selectedFacultyId) {
-        this.selectedProgram.facultyId = this.selectedFacultyId;
-      }
-      if (this.selectedManagerId) {
-        this.selectedProgram.managerId = this.selectedManagerId;
+      // 🚨 KLJUČNA IZMENA: Osigurava da su ID-evi brojevi pre slanja.
+      let facultyIdToSend: number | null = null;
+      if (this.selectedProgram.facultyId) {
+          facultyIdToSend = Number(this.selectedProgram.facultyId);
+          // Postavi na null ako je 0 ili NaN (što može biti neizabrana opcija u padajućem meniju)
+          if (isNaN(facultyIdToSend) || facultyIdToSend === 0) {
+              facultyIdToSend = null;
+          }
       }
 
-      if (this.selectedProgram.id === 0) {
-        if (!this.selectedProgram.facultyId || !this.selectedProgram.managerId) {
+      let managerIdToSend: number | null = null;
+      if (this.selectedProgram.managerId) {
+          managerIdToSend = Number(this.selectedProgram.managerId);
+          // Postavi na null ako je 0 ili NaN
+          if (isNaN(managerIdToSend) || managerIdToSend === 0) {
+              managerIdToSend = null;
+          }
+      }
+      
+      // Kreiranje DTO objekta za slanje sa ispravnim tipovima (Number/Long)
+      const programToSend = {
+          ...this.selectedProgram,
+          facultyId: facultyIdToSend,
+          managerId: managerIdToSend
+      };
+
+
+      if (programToSend.id === 0) {
+        // Logika za kreiranje
+        if (!programToSend.facultyId || !programToSend.managerId) {
           this.errorMessage = 'Please select a faculty and a manager.';
           return;
         }
 
-        this.studyProgramService.createStudyProgram(this.selectedProgram, token).subscribe({
+        // Šaljemo ispravno konvertovani objekat
+        this.studyProgramService.createStudyProgram(programToSend as StudyProgram, token).subscribe({
           next: () => {
             this.loadData();
             this.selectedProgram = null;
+            this.errorMessage = null; 
           },
           error: (error) => {
-            this.errorMessage = 'Failed to create study program. ' + error.message;
+            this.errorMessage = 'Failed to create study program. Server responded: ' + (error.error?.message || error.message);
             console.error('Creation error!', error);
           }
         });
       } else {
-        this.studyProgramService.updateStudyProgram(this.selectedProgram, token).subscribe({
+        // Logika za ažuriranje
+        // Šaljemo ispravno konvertovani objekat i za update
+        this.studyProgramService.updateStudyProgram(programToSend as StudyProgram, token).subscribe({
           next: () => {
             this.loadData();
             this.selectedProgram = null;
+            this.errorMessage = null;
           },
           error: (error) => {
-            this.errorMessage = 'Failed to update study program. ' + error.message;
+            this.errorMessage = 'Failed to update study program. Server responded: ' + (error.error?.message || error.message);
             console.error('Update error!', error);
           }
         });
@@ -166,7 +188,7 @@ export class StudyProgramManagementComponent implements OnInit {
       return;
     }
 
-    if (confirm('Are you sure you want to delete this study program?')) {
+    if (confirm('Are you sure you want to delete this study program?')) { 
       this.studyProgramService.deleteStudyProgram(id, token).subscribe({
         next: () => {
           this.loadStudyPrograms();

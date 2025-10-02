@@ -45,10 +45,30 @@
         <input id="rectorEmail" type="text" [(ngModel)]="editableUniversity.rectorEmail" name="rectorEmail" disabled>
       </div>
 
-      <div class="form-group">
-        <label>Adresa:</label>
-        <p class="readonly-value">{{ editableUniversity.address }}</p>
-      </div>
+      <!-- ISPRAVKA GREŠKE: Dodat *ngIf da se reši upozorenje kompajlera o 'undefined' objektu -->
+      <fieldset class="address-group" *ngIf="editableUniversity.addressDetails">
+        <legend>Adresa</legend>
+        
+        <div class="form-group">
+            <label for="street">Ulica:</label>
+            <input id="street" type="text" [(ngModel)]="editableUniversity.addressDetails.street" name="addressStreet" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="number">Broj:</label>
+            <input id="number" type="text" [(ngModel)]="editableUniversity.addressDetails.number" name="addressNumber" disabled>
+        </div>
+        
+        <div class="form-group">
+            <label for="city">Grad:</label>
+            <input id="city" type="text" [(ngModel)]="editableUniversity.addressDetails.city" name="addressCity" disabled>
+        </div>
+        
+        <div class="form-group">
+            <label for="country">Država:</label>
+            <input id="country" type="text" [(ngModel)]="editableUniversity.addressDetails.country" name="addressCountry" disabled>
+        </div>
+      </fieldset>
       
       <button type="submit" [disabled]="loading || universityForm.invalid">Sačuvaj izmene</button>
     </form>
