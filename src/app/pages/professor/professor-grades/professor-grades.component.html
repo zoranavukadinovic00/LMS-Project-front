@@ -1,0 +1,74 @@
+<div class="professor-grades">
+  <h2>Grades — {{ courseName }}</h2>
+
+  <div class="section">
+    <label for="term">Select Exam Term:</label>
+    <select id="term" [(ngModel)]="selectedTermId" (change)="onTermSelected()">
+      <option [value]="undefined">-- Choose Term --</option>
+      <option *ngFor="let term of examTerms" [value]="term.id">
+        {{ term.name }} - {{ term.examDate | date:'dd/MM/yyyy HH:mm' }}
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p>Loading students...</p>
+  </div>
+
+  <div *ngIf="!loading && selectedTermId && studentApplications.length > 0" class="grades-section">
+    <h3>Students Registered for This Exam</h3>
+    
+    <table class="grades-table">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Index</th>
+          <th>Status</th>
+          <th>Grade</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of studentApplications">
+          <td>{{ app.studentName }}</td>
+          <td>{{ app.studentIndex }}</td>
+          <td>
+            <span 
+              class="status-badge" 
+              [class.status-graded]="app.status === 'GRADED'" 
+              [class.status-pending]="app.status !== 'GRADED'">
+              {{ app.status }}
+            </span>
+          </td>
+          <td>
+            <input 
+              type="number" 
+              [value]="getGrade(app.id) || ''" 
+              (input)="setGrade(app.id, $any($event.target).value)"
+              min="5" 
+              max="10"
+              [disabled]="app.status === 'GRADED'"
+              placeholder="5-10"
+              class="grade-input"
+            />
+          </td>
+          <td>
+            <button 
+              class="btn-submit-grade" 
+              (click)="submitGrade(app)" 
+              [disabled]="loading || app.status === 'GRADED' || !getGrade(app.id)">
+              {{ app.status === 'GRADED' ? 'Submitted' : 'Submit' }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && selectedTermId && studentApplications.length === 0 && !errorMessage" class="no-data">
+    <p>No students have registered for this exam term yet.</p>
+  </div>
+
+  <p *ngIf="message" class="success-message">✓ {{ message }}</p>
+  <p *ngIf="errorMessage" class="error-message">✗ {{ errorMessage }}</p>
+</div>

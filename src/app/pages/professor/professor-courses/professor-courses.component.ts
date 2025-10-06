@@ -48,6 +48,10 @@ export class ProfesorCoursesComponent implements OnInit {
   this.router.navigate(['/manage-courses', courseId, 'details'], { state: { courseName } });
   }
 
+  openGrades(courseId: number, courseName: string): void {
+  this.router.navigate(['/professor-grades', courseId], { state: { courseName } });
+}
+
 
 }
 

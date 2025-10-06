@@ -1,0 +1,117 @@
+.page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+  color: #4a2c2a;
+  margin-bottom: 2rem;
+}
+
+h3 {
+  color: #6b4c4a;
+  margin: 1.5rem 0 1rem;
+}
+
+.input-section {
+  background-color: #f8ebe7;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.input-section label {
+  font-weight: 600;
+  color: #4a2c2a;
+}
+
+.input-section select,
+.input-section input {
+  padding: 0.6rem;
+  border: 1px solid #c4a7a2;
+  border-radius: 6px;
+  outline: none;
+  min-width: 200px;
+}
+
+.btn-add, .btn-select {
+  background-color: #b9726e;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.btn-add:hover, .btn-select:hover {
+  background-color: #8e4a47;
+}
+
+.students-section {
+  margin: 2rem 0;
+}
+
+.students-table,
+.grades-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.students-table th,
+.grades-table th {
+  background-color: #b9726e;
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.students-table td,
+.grades-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e9dcd9;
+}
+
+.students-table tr:hover,
+.grades-table tr:hover {
+  background-color: #f8ebe7;
+}
+
+.students-table tr.selected {
+  background-color: #d4b5b0;
+}
+
+.success-message {
+  color: #2d7a2d;
+  background-color: #d4edda;
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+.error-message {
+  color: #8e4a47;
+  background-color: #f8d7da;
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid #e9dcd9;
+  margin: 3rem 0 2rem;
+}

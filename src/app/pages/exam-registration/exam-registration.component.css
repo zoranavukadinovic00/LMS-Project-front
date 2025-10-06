@@ -1,71 +1,137 @@
 .exam-registration {
-  max-width: 600px;
+  max-width: 900px;
   margin: 2rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+  color: #4a2c2a;
+  margin-bottom: 2rem;
+}
+
+h3 {
+  color: #6b4c4a;
+  margin: 2rem 0 1rem;
+}
+
+.section {
+  background-color: #f8ebe7;
   padding: 1.5rem;
-  background: var(--form-background);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  margin-bottom: 2rem;
 }
 
-
-.exam-registration label {
+.section label {
   display: block;
+  font-weight: 600;
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  color: #4a2c2a;
 }
 
-.exam-registration select {
+select {
   width: 100%;
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: var(--color-light);
+  padding: 0.8rem;
+  border: 1px solid #c4a7a2;
+  border-radius: 6px;
   font-size: 1rem;
-  margin-bottom: 1rem;
-  transition: border-color 0.2s ease;
+  background-color: white;
 }
 
-.exam-registration select:focus {
-  border-color: var(--color-secondary);
-  outline: none;
+.courses-section {
+  margin-top: 2rem;
 }
 
-.exam-registration select option:hover {
-  background-color: var(--color-secondary);
-  outline: none;
+.course-card {
+  background-color: #fff;
+  border: 1px solid #e9dcd9;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.exam-registration ul {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0;
+.course-card h4 {
+  margin: 0 0 0.5rem;
+  color: #4a2c2a;
 }
 
-.exam-registration li {
+.course-card p {
+  margin: 0.5rem 0;
+  color: #6b4c4a;
+}
+
+.terms-list {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f8ebe7;
+  border-radius: 6px;
+}
+
+.terms-list label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #4a2c2a;
+}
+
+.term-item {
   padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
   display: flex;
   align-items: center;
 }
 
-.exam-registration li:last-child {
-  border-bottom: none;
-}
-
-.exam-registration input[type="checkbox"] {
-  margin-right: 0.6rem;
+.term-item input[type="checkbox"] {
+  margin-right: 0.8rem;
   transform: scale(1.2);
+  cursor: pointer;
 }
 
+.term-item span {
+  color: #4a2c2a;
+}
+
+.btn-apply {
+  background-color: #b9726e;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.btn-apply:hover:not(:disabled) {
+  background-color: #8e4a47;
+}
+
+.btn-apply:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #8e4a47;
+}
 
 .success {
+  color: #2d7a2d;
+  background-color: #d4edda;
+  padding: 1rem;
+  border-radius: 6px;
   margin-top: 1rem;
-  color: #28a745;
-  font-weight: 500;
 }
 
 .error {
+  color: #8e4a47;
+  background-color: #f8d7da;
+  padding: 1rem;
+  border-radius: 6px;
   margin-top: 1rem;
-  color: #dc3545;
-  font-weight: 500;
 }

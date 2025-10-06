@@ -29,6 +29,7 @@ import { AddUserComponent } from './pages/admin/add-user/add-user.component';
 import { EnrollStudentComponent } from './pages/staff/enroll-student/enroll-student.component';
 import { DocumentRequestsComponent } from './pages/student/document-requests/document-requests.component';
 import { StaffDocumentRequestsComponent } from './pages/staff/document-requests/document-requests.component';
+import { ProfessorGradesComponent } from './pages/professor/professor-grades/professor-grades.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -48,6 +49,7 @@ export const routes: Routes = [
   { path: 'professor-syllabus/:id', component: ProfessorSyllabusComponent },
   { path: 'professor-notifications/:id', component: ProfessorNotificationsComponent },
   { path: 'professor-term-topic/:id', component: ProfessorTermTopicComponent },
+  { path: 'professor-grades/:id', component: ProfessorGradesComponent },
   { path: 'manage-courses/:courseId/details', component: CourseDetailsComponent },
   { path: 'search-students', component: StudentOnYearTableComponent },
   { path: 'admin/users', component: UserManagementComponent }, 
