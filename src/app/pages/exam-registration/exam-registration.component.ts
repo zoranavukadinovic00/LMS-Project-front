@@ -4,16 +4,11 @@ import { FormsModule } from '@angular/forms';
 
 import { StudentCourse } from '../../model/student-course.model';
 import { ExamTerm } from '../../model/exam-term.model';
-import { ExamPeriod } from '../../model/exam.model';
-import { StudentCourseService } from '../../services/student-course.service';
+import { ExamPeriod } from '../../model/exam.model'; 
+import { StudentCourseService } from '../../services/student-course.service'; 
 import { ExamTermService } from '../../services/exam-term.service';
 import { ExamPeriodService } from '../../services/exam-period.service';
 import { ExamApplicationService } from '../../services/exam-application.service';
-
-interface CourseWithTerms {
-  course: StudentCourse;
-  availableTerms: ExamTerm[];
-}
 
 @Component({
   selector: 'app-exam-registration',
@@ -26,18 +21,19 @@ export class ExamRegistrationComponent implements OnInit {
   examPeriods: ExamPeriod[] = [];
   selectedPeriodId?: number;
   
-  myCourses: StudentCourse[] = [];
+  myCourses: StudentCourse[] = []; 
   allTerms: ExamTerm[] = [];
-  coursesWithTerms: CourseWithTerms[] = [];
   
-  selectedApplications: { courseName: string, termId: number }[] = [];
+  selectedCourseName?: string; 
+  selectedTermId?: number;
+  availableTermsForCourse: ExamTerm[] = [];
   
   message = '';
   errorMessage = '';
   loading = false;
 
   constructor(
-    private studentCourseService: StudentCourseService,
+    private studentCourseService: StudentCourseService, 
     private examTermService: ExamTermService,
     private examPeriodService: ExamPeriodService,
     private examApplicationService: ExamApplicationService
@@ -45,25 +41,19 @@ export class ExamRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadExamPeriods();
-    this.loadMyCourses();
     this.loadAllTerms();
+    this.loadMyCourses(); 
   }
 
   loadExamPeriods(): void {
     const token = localStorage.getItem('token') ?? '';
     this.examPeriodService.getAllPeriods(token).subscribe({
       next: (periods) => {
-        this.examPeriods = periods.filter(p => this.isPeriodActive(p));
+        this.examPeriods = periods; 
+        this.filterAvailableTerms();
       },
       error: (err) => console.error('Error loading periods:', err)
     });
-  }
-
-  isPeriodActive(period: ExamPeriod): boolean {
-    const now = new Date();
-    const start = new Date(period.startDate);
-    const end = new Date(period.endDate);
-    return now >= start && now <= end;
   }
 
   loadMyCourses(): void {
@@ -71,9 +61,9 @@ export class ExamRegistrationComponent implements OnInit {
     this.studentCourseService.getMyEnrolledCourses(token).subscribe({
       next: (courses) => {
         this.myCourses = courses;
-        this.updateCoursesWithTerms();
+        this.filterAvailableTerms();
       },
-      error: (err) => console.error('Error loading courses:', err)
+      error: (err) => console.error('Greška pri učitavanju upisanih predmeta:', err)
     });
   }
 
@@ -82,96 +72,56 @@ export class ExamRegistrationComponent implements OnInit {
     this.examTermService.getAllTerms(token).subscribe({
       next: (terms) => {
         this.allTerms = terms;
-        this.updateCoursesWithTerms();
+        this.filterAvailableTerms();
       },
       error: (err) => console.error('Error loading terms:', err)
     });
   }
 
-  onPeriodSelected(): void {
-    this.updateCoursesWithTerms();
+  onSelectionChange(): void {
+    this.selectedTermId = undefined; 
+    this.filterAvailableTerms();
   }
 
-  updateCoursesWithTerms(): void {
-    if (!this.selectedPeriodId) {
-      this.coursesWithTerms = [];
+  filterAvailableTerms(): void {
+    this.message = '';
+    this.errorMessage = '';
+    this.availableTermsForCourse = [];
+
+    if (!this.selectedPeriodId || !this.selectedCourseName) {
       return;
     }
 
-    this.coursesWithTerms = this.myCourses.map(course => ({
-      course,
-      availableTerms: this.allTerms.filter(term => 
-        term.courseName === course.courseName && 
-        term.periodId === this.selectedPeriodId
-      )
-    })).filter(cwt => cwt.availableTerms.length > 0);
-  }
-
-  toggleTermSelection(courseName: string, termId: number): void {
-    const index = this.selectedApplications.findIndex(
-      app => app.courseName === courseName && app.termId === termId
-    );
-
-    if (index > -1) {
-      this.selectedApplications.splice(index, 1);
-    } else {
-      const alreadySelectedForCourse = this.selectedApplications.find(
-        app => app.courseName === courseName
-      );
-      if (alreadySelectedForCourse) {
-        this.errorMessage = 'You can only select one term per course';
-        return;
-      }
-      this.selectedApplications.push({ courseName, termId });
-      this.errorMessage = '';
-    }
-  }
-
-  isTermSelected(courseName: string, termId: number): boolean {
-    return this.selectedApplications.some(
-      app => app.courseName === courseName && app.termId === termId
+    this.availableTermsForCourse = this.allTerms.filter(term => 
+      term.courseName === this.selectedCourseName && 
+      term.periodId === this.selectedPeriodId
     );
   }
 
-  applyForExams(): void {
-    if (this.selectedApplications.length === 0) {
-      this.errorMessage = 'Please select at least one exam term';
+  applyForExam(): void {
+    if (!this.selectedTermId) {
+      this.errorMessage = 'Molimo odaberite termin za prijavu ispita.';
+      this.message = '';
       return;
     }
 
     this.loading = true;
     const token = localStorage.getItem('token') ?? '';
-    let completed = 0;
-    let errors = 0;
 
-    this.selectedApplications.forEach(app => {
-      this.examApplicationService.applyForExam(token, app.termId).subscribe({
-        next: () => {
-          completed++;
-          if (completed + errors === this.selectedApplications.length) {
-            this.handleApplicationComplete(errors);
-          }
-        },
-        error: (err) => {
-          errors++;
-          console.error('Error applying:', err);
-          if (completed + errors === this.selectedApplications.length) {
-            this.handleApplicationComplete(errors);
-          }
-        }
-      });
+    this.examApplicationService.applyForExam(token, this.selectedTermId).subscribe({
+      next: () => {
+        this.message = 'Ispit je uspješno prijavljen!';
+        this.errorMessage = '';
+        this.loading = false;
+        this.selectedTermId = undefined;
+      },
+      error: (err) => {
+        const errorMsg = err.error?.message || 'Greška pri prijavi. Mogući razlog: već prijavljen ili niste upisani na taj predmet/rok.';
+        this.errorMessage = errorMsg;
+        this.message = '';
+        this.loading = false;
+        console.error('Error applying for exam:', err);
+      }
     });
-  }
-
-  handleApplicationComplete(errors: number): void {
-    this.loading = false;
-    if (errors === 0) {
-      this.message = 'Successfully applied for all selected exams!';
-      this.errorMessage = '';
-      this.selectedApplications = [];
-    } else {
-      this.errorMessage = `Failed to apply for ${errors} exam(s). Check if you already applied.`;
-      this.message = '';
-    }
   }
 }

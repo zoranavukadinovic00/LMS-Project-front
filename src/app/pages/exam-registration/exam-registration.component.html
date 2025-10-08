@@ -1,48 +1,62 @@
 <div class="exam-registration">
-  <h2>Exam Registration</h2>
+  <h2 class="text-3xl font-bold mb-6 text-gray-800">Prijava Ispita</h2>
 
-  <div class="section">
-    <label for="period">Select Exam Period:</label>
-    <select id="period" [(ngModel)]="selectedPeriodId" (change)="onPeriodSelected()">
-      <option [value]="undefined">-- Select Period --</option>
+  <div class="section mb-4 p-4 bg-white shadow-md rounded-lg">
+    <label for="course" class="block text-lg font-medium text-gray-700 mb-2">1. Odaberite Upisani Predmet:</label>
+    <select 
+      id="course" 
+      [(ngModel)]="selectedCourseName" 
+      (change)="onSelectionChange()"
+      class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md transition duration-150 ease-in-out">
+      <option [value]="undefined">-- Odabir Predmeta --</option>
+      <option *ngFor="let course of myCourses" [value]="course.courseName">
+        {{ course.courseName }} (Status: {{ course.status }} | ESPB: {{ course.coursesEspbPoints }})
+      </option>
+    </select>
+  </div>
+  
+  <div *ngIf="selectedCourseName" class="section mb-4 p-4 bg-white shadow-md rounded-lg">
+    <label for="period" class="block text-lg font-medium text-gray-700 mb-2">2. Odaberite Ispitni Rok:</label>
+    <select 
+      id="period" 
+      [(ngModel)]="selectedPeriodId" 
+      (change)="onSelectionChange()"
+      class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md transition duration-150 ease-in-out">
+      <option [value]="undefined">-- Odabir Roka --</option>
       <option *ngFor="let period of examPeriods" [value]="period.id">
-        {{ period.name }} ({{ period.startDate | date:'short' }} - {{ period.endDate | date:'short' }})
+        {{ period.name }} ({{ period.startDate | date:'shortDate' }} - {{ period.endDate | date:'shortDate' }})
       </option>
     </select>
   </div>
 
-  <div *ngIf="selectedPeriodId && coursesWithTerms.length > 0" class="courses-section">
-    <h3>Your Enrolled Courses</h3>
+  <div *ngIf="selectedCourseName && selectedPeriodId" class="section mb-6 p-4 bg-white shadow-md rounded-lg">
+    <label for="term" class="block text-lg font-medium text-gray-700 mb-2">3. Odaberite Termin:</label>
     
-    <div *ngFor="let cwt of coursesWithTerms" class="course-card">
-      <h4>{{ cwt.course.courseName }}</h4>
-      <p><strong>ESPB:</strong> {{ cwt.course.coursesEspbPoints }} | <strong>Status:</strong> {{ cwt.course.status }}</p>
-      
-      <div class="terms-list">
-        <label>Available exam terms:</label>
-        <div *ngFor="let term of cwt.availableTerms" class="term-item">
-          <input 
-            type="checkbox" 
-            [checked]="isTermSelected(cwt.course.courseName, term.id)"
-            (change)="toggleTermSelection(cwt.course.courseName, term.id)"
-          />
-          <span>{{ term.name }} - {{ term.examDate | date:'short' }}</span>
-        </div>
-      </div>
+    <div *ngIf="availableTermsForCourse.length > 0; else noTerms">
+      <select 
+        id="term" 
+        [(ngModel)]="selectedTermId"
+        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md transition duration-150 ease-in-out">
+        <option [value]="undefined">-- Odaberite Termin --</option>
+        <option *ngFor="let term of availableTermsForCourse" [value]="term.id">
+          {{ term.name }} - {{ term.examDate | date:'fullDate' }}
+        </option>
+      </select>
     </div>
 
-    <button 
-      class="btn-apply" 
-      (click)="applyForExams()" 
-      [disabled]="loading || selectedApplications.length === 0">
-      {{ loading ? 'Applying...' : 'Apply for Selected Exams' }}
-    </button>
+    <ng-template #noTerms>
+      <p class="text-sm text-red-600 mt-2">Nema dostupnih termina za odabrani predmet u odabranom roku.</p>
+    </ng-template>
   </div>
 
-  <div *ngIf="selectedPeriodId && coursesWithTerms.length === 0" class="no-data">
-    <p>No available exam terms for this period.</p>
-  </div>
+  <button 
+    class="btn-apply w-full py-3 px-4 rounded-lg text-white font-semibold transition duration-300 ease-in-out shadow-lg 
+           bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:shadow-none"
+    (click)="applyForExam()" 
+    [disabled]="loading || !selectedTermId">
+    {{ loading ? 'Prijava u toku...' : 'Prijavi Izabrani Ispit' }}
+  </button>
 
-  <p *ngIf="message" class="success">{{ message }}</p>
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  <p *ngIf="message" class="success mt-4 p-3 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-md shadow">{{ message }}</p>
+  <p *ngIf="errorMessage" class="error mt-4 p-3 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-md shadow">{{ errorMessage }}</p>
 </div>
