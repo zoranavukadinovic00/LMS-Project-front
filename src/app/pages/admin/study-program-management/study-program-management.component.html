@@ -9,18 +9,17 @@
     <form (ngSubmit)="saveProgram()">
       <div class="form-group">
         <label for="name">Name:</label>
-        <input id="name" type="text" [(ngModel)]="selectedProgram.name" name="name" required>
+        <input id="name" type="text" [(ngModel)]="selectedProgram!.name" name="name" required>
       </div>
 
       <div class="form-group">
         <label for="description">Description:</label>
-        <textarea id="description" [(ngModel)]="selectedProgram.description" name="description" required></textarea>
+        <textarea id="description" [(ngModel)]="selectedProgram!.description" name="description" required></textarea>
       </div>
 
       <div class="form-group">
         <label for="faculty">Faculty:</label>
-        <select id="faculty" [(ngModel)]="selectedProgram.facultyId" name="facultyId" required>
-          <!-- Promena: Korišćenje [ngValue]="null" za bolju kompatibilnost sa neizabranim stanjem -->
+        <select id="faculty" [(ngModel)]="selectedProgram!.facultyId" name="facultyId" required>
           <option [ngValue]="null" disabled>Select Faculty</option> 
           <option *ngFor="let faculty of faculties" [ngValue]="faculty.id">{{ faculty.name }}</option>
         </select>
@@ -28,16 +27,17 @@
 
       <div class="form-group">
         <label for="manager">Manager:</label>
-        <select id="manager" [(ngModel)]="selectedProgram.managerId" name="managerId" required>
-          <!-- Promena: Korišćenje [ngValue]="null" za bolju kompatibilnost sa neizabranim stanjem -->
+        <select id="manager" [(ngModel)]="selectedProgram!.managerId" name="managerId" required>
           <option [ngValue]="null" disabled>Select Manager</option>
           <option *ngFor="let user of users" [ngValue]="user.id">{{ user.name }} {{ user.surname }}</option>
         </select>
       </div>
 
-      <button type="submit" class="submit-button">Save</button>
+      <button type="submit" class="submit-button">
+        {{ selectedProgram.id === 0 ? 'Add New' : 'Save Changes' }}
+      </button>
       <button type="button" (click)="cancelEdit()" class="cancel-button">Cancel</button>
-    </form>
+      </form>
   </div>
 
   <div class="table-container">

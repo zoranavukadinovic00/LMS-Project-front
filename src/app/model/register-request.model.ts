@@ -5,7 +5,8 @@ export interface RegisterRequest {
   username: string;
   password?: string;
   email: string;
-  jmbg?: string;
+  // FIX 4: Uklonjena '?' jer je backend validacija pokazala da je JMBG obavezan.
+  jmbg: string; 
   name: string;
   surname: string;
   biography?: string;

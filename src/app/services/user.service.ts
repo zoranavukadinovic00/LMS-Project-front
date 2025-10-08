@@ -1,5 +1,3 @@
-// src/app/services/user.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -12,6 +10,7 @@ import { RegisterRequest } from '../model/register-request.model';
 })
 export class UserService {
   private apiUrl = 'http://localhost:8080/api/users';
+  // Ovo je ispravna ruta za administratorske operacije kreiranja/ažuriranja/brisanja
   private adminApiUrl = 'http://localhost:8080/api/admin/users';
   private authApiUrl = 'http://localhost:8080/api/auth';
 
@@ -21,13 +20,15 @@ export class UserService {
     return { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) };
   }
 
-  createUser(token: string, userData: RegisterRequest): Observable<any> {
+  // FIX 1: Promenjena metoda da koristi ispravan adminApiUrl za kreiranje korisnika
+  adminCreateUser(token: string, userData: RegisterRequest): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.post<any>(`${this.authApiUrl}/register`, userData, { headers }).pipe(
+    // Post zahtev ide na /api/admin/users
+    return this.http.post<any>(this.adminApiUrl, userData, { headers }).pipe(
       catchError(this.handleError)
     );
   }
@@ -59,7 +60,9 @@ export class UserService {
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      errorMessage = `Error ${error.status}: ${error.error?.message || error.statusText}`;
+      // Poboljšana poruka za grešku, uključujući status
+      const message = typeof error.error === 'string' ? error.error : (error.error?.message || error.statusText);
+      errorMessage = `Greška ${error.status}: ${message}`;
     }
     console.error('UserService error:', error);
     return throwError(() => new Error(errorMessage));

@@ -22,6 +22,7 @@ export class StudyProgramManagementComponent implements OnInit {
   users: User[] = [];
   selectedProgram: StudyProgram | null = null;
   errorMessage: string | null = null;
+  
 
   constructor(
     private studyProgramService: StudyProgramService,
@@ -32,8 +33,14 @@ export class StudyProgramManagementComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
   }
+  
+  // Pomoćna funkcija za resetovanje grešaka
+  clearError(): void {
+      this.errorMessage = null;
+  }
 
   loadData(): void {
+    this.clearError();
     this.loadStudyPrograms();
     this.loadFaculties();
     this.loadUsers();
@@ -52,7 +59,7 @@ export class StudyProgramManagementComponent implements OnInit {
         this.studyPrograms = data;
       },
       error: (error: any) => {
-        this.errorMessage = 'Failed to load study programs. ' + error.message;
+        this.errorMessage = 'Failed to load study programs: ' + (error.userMessage || error.message);
         console.error('Failed to load study programs:', error);
       }
     });
@@ -74,7 +81,6 @@ export class StudyProgramManagementComponent implements OnInit {
     if (token) {
       this.userService.getAllUsers(token).subscribe({
         next: (data) => {
-          // Filtrirajte korisnike na one koji mogu biti menadžeri ako je potrebno
           this.users = data; 
         },
         error: (error) => {
@@ -85,13 +91,16 @@ export class StudyProgramManagementComponent implements OnInit {
   }
 
   addProgram(): void {
+    console.log("LOG: Function addProgram() called. Opening form to create NEW program.");
+    this.clearError();
+    
     this.selectedProgram = {
-      id: 0,
+      id: 0, // ID 0 signalizira KREIRANJE
       name: '',
-      facultyId: null as any,
+      facultyId: null as any, 
       facultyName: '',
       description: '',
-      managerId: null as any,
+      managerId: null as any, 
       managerName: '',
       managerSurname: '',
       managerEmail: ''
@@ -99,12 +108,17 @@ export class StudyProgramManagementComponent implements OnInit {
   }
 
   editProgram(program: StudyProgram): void {
-    // Kreiranje plitke kopije
+    this.clearError();
     this.selectedProgram = { ...program };
   }
 
   saveProgram(): void {
     if (this.selectedProgram) {
+      
+      const isNew = this.selectedProgram.id === 0;
+      console.log(`LOG: Attempting to save program. Mode: ${isNew ? 'CREATE' : 'UPDATE'}`);
+      
+      this.clearError();
       const token = localStorage.getItem('token');
       if (!token) {
         this.errorMessage = 'Authentication token not found.';
@@ -112,11 +126,9 @@ export class StudyProgramManagementComponent implements OnInit {
         return;
       }
       
-      // 🚨 KLJUČNA IZMENA: Osigurava da su ID-evi brojevi pre slanja.
       let facultyIdToSend: number | null = null;
       if (this.selectedProgram.facultyId) {
           facultyIdToSend = Number(this.selectedProgram.facultyId);
-          // Postavi na null ako je 0 ili NaN (što može biti neizabrana opcija u padajućem meniju)
           if (isNaN(facultyIdToSend) || facultyIdToSend === 0) {
               facultyIdToSend = null;
           }
@@ -125,13 +137,11 @@ export class StudyProgramManagementComponent implements OnInit {
       let managerIdToSend: number | null = null;
       if (this.selectedProgram.managerId) {
           managerIdToSend = Number(this.selectedProgram.managerId);
-          // Postavi na null ako je 0 ili NaN
           if (isNaN(managerIdToSend) || managerIdToSend === 0) {
               managerIdToSend = null;
           }
       }
       
-      // Kreiranje DTO objekta za slanje sa ispravnim tipovima (Number/Long)
       const programToSend = {
           ...this.selectedProgram,
           facultyId: facultyIdToSend,
@@ -139,36 +149,34 @@ export class StudyProgramManagementComponent implements OnInit {
       };
 
 
-      if (programToSend.id === 0) {
+      if (isNew) {
         // Logika za kreiranje
         if (!programToSend.facultyId || !programToSend.managerId) {
-          this.errorMessage = 'Please select a faculty and a manager.';
+          this.errorMessage = 'Molimo Vas da odaberete Fakultet i Menadžera pre slanja.';
           return;
         }
 
-        // Šaljemo ispravno konvertovani objekat
+        console.log("LOG: Sending Create Request with DTO:", programToSend);
         this.studyProgramService.createStudyProgram(programToSend as StudyProgram, token).subscribe({
           next: () => {
+            console.log("LOG: Study Program successfully created.");
             this.loadData();
             this.selectedProgram = null;
-            this.errorMessage = null; 
           },
           error: (error) => {
-            this.errorMessage = 'Failed to create study program. Server responded: ' + (error.error?.message || error.message);
+            this.errorMessage = `Creation failed. ${error.userMessage || 'Unknown server error.'}`; 
             console.error('Creation error!', error);
           }
         });
       } else {
         // Logika za ažuriranje
-        // Šaljemo ispravno konvertovani objekat i za update
         this.studyProgramService.updateStudyProgram(programToSend as StudyProgram, token).subscribe({
           next: () => {
             this.loadData();
             this.selectedProgram = null;
-            this.errorMessage = null;
           },
           error: (error) => {
-            this.errorMessage = 'Failed to update study program. Server responded: ' + (error.error?.message || error.message);
+            this.errorMessage = `Update failed. ${error.userMessage || 'Unknown server error.'}`;
             console.error('Update error!', error);
           }
         });
@@ -177,10 +185,13 @@ export class StudyProgramManagementComponent implements OnInit {
   }
 
   cancelEdit(): void {
+    this.clearError(); 
     this.selectedProgram = null;
+    console.log("LOG: Edit/Create cancelled. Form closed."); 
   }
-
+  
   deleteProgram(id: number): void {
+    this.clearError();
     const token = localStorage.getItem('token');
     if (!token) {
       this.errorMessage = 'Authentication token not found.';
@@ -194,7 +205,7 @@ export class StudyProgramManagementComponent implements OnInit {
           this.loadStudyPrograms();
         },
         error: (error) => {
-          this.errorMessage = 'Failed to delete study program. ' + error.message;
+          this.errorMessage = `Failed to delete study program. ${error.userMessage || 'Unknown error.'}`;
           console.error('Delete error!', error);
         }
       });

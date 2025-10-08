@@ -20,6 +20,8 @@ export class AddUserComponent {
     email: '',
     name: '',
     surname: '',
+    // FIX 2a: Dodato polje JMBG sa praznom vrednošću, jer ga backend zahteva.
+    jmbg: '', 
     biography: '', 
     type: UserType.PROFESSOR
   };
@@ -42,7 +44,8 @@ export class AddUserComponent {
       return;
     }
 
-    this.userService.createUser(token, this.newUser)
+    // FIX 2b: Pozivanje ispravljene metode (adminCreateUser)
+    this.userService.adminCreateUser(token, this.newUser)
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
@@ -63,6 +66,8 @@ export class AddUserComponent {
       email: '',
       name: '',
       surname: '',
+      // FIX 2c: Reset JMBG polja nakon uspešnog dodavanja
+      jmbg: '', 
       biography: '', 
       type: UserType.PROFESSOR
     };

@@ -19,6 +19,14 @@
       <label for="surname">Prezime:</label>
       <input id="surname" type="text" [(ngModel)]="newUser.surname" name="surname" required>
     </div>
+    
+    <!-- FIX 3: Dodavanje JMBG polja u formu -->
+    <div class="form-group">
+      <label for="jmbg">JMBG:</label>
+      <!-- Postavljeno je na 'required' jer je backend validacija pokazala da je obavezno -->
+      <input id="jmbg" type="text" [(ngModel)]="newUser.jmbg" name="jmbg" required>
+    </div>
+    <!------------------------------------->
 
     <div class="form-group">
       <label for="email">Email:</label>
